@@ -20,11 +20,11 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.iv_play_now){
-            showPlayFragmnet();
+            showPlayFragment();
         }
     }
 
-    private void showPlayFragmnet() {
+    private void showPlayFragment() {
         callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT,null);
     }
 
