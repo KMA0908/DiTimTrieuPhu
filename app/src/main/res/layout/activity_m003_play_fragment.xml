@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/atp__activity_player_layout_money_background"
+    android:background="@drawable/bg_splash"
     android:orientation="vertical">
 
     <LinearLayout
@@ -28,7 +28,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="56dp"
             android:layout_weight="1"
             android:gravity="center_horizontal">
 
@@ -53,7 +53,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="3dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/atp__activity_profile_icon_money" />
+                android:src="@drawable/ic_coin" />
 
             <TextView
                 android:id="@+id/monney"
@@ -81,7 +81,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/atp__activity_player_button_image_help_stop" />
+                android:src="@drawable/ic_stop_player" />
 
         </LinearLayout>
 
@@ -94,7 +94,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/atp__activity_player_button_image_help_change_question" />
+                android:src="@drawable/ic_reset" />
         </LinearLayout>
 
         <LinearLayout
@@ -106,7 +106,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/atp__activity_player_button_image_help_5050" />
+                android:src="@drawable/ic_50_50" />
         </LinearLayout>
 
         <LinearLayout
@@ -118,7 +118,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/atp__activity_player_button_image_help_audience" />
+                android:src="@drawable/ic_audiece" />
         </LinearLayout>
 
         <LinearLayout
@@ -130,7 +130,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/atp__activity_player_button_image_help_call" />
+                android:src="@drawable/ic_call" />
         </LinearLayout>
     </LinearLayout>
 
@@ -142,7 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/atp__activity_player_layout_play_question_background" />
+            android:src="@drawable/bg_question_player" />
 
         <TextView
             android:id="@+id/question"
@@ -162,7 +162,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="8dp"
             android:paddingHorizontal="30dp"
-            android:src="@drawable/atp__activity_player_layout_play_order_question"></ImageView>
+            android:src="@drawable/ic_border_question"></ImageView>
 
         <TextView
             android:layout_width="match_parent"
@@ -182,7 +182,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
-            android:src="@drawable/atp__activity_player_layout_play_answer_background_normal"/>
+            android:src="@drawable/ic_play_answer"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -200,7 +200,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="30dp"
-        android:src="@drawable/atp__activity_player_layout_play_answer_background_normal"/>
+        android:src="@drawable/ic_play_answer"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -218,7 +218,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingHorizontal="30dp"
-        android:src="@drawable/atp__activity_player_layout_play_answer_background_normal"/>
+        android:src="@drawable/ic_play_answer"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -238,7 +238,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
-            android:src="@drawable/atp__activity_player_layout_play_answer_background_normal" />
+            android:src="@drawable/ic_play_answer" />
 
         <TextView
             android:layout_width="match_parent"
