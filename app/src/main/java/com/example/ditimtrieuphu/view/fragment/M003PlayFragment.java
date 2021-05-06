@@ -20,7 +20,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.m002_main_fragment;
+        return R.layout.m003_play_fragment;
     }
 
     public void setCallBack(OnActionCallBack callBack) {
