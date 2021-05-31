@@ -15,6 +15,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     @Override
     protected void initViews() {
          ivPlayNow=findViewById(R.id.iv_play_now,this);
+         
     }
 
     @Override
@@ -35,7 +36,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.m002_main_fragment;
+        return R.layout.activity_m005_prize_fragment;
     }
 
     public void setCallBack(OnActionCallBack callBack) {
