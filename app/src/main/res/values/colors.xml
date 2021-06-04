@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorBGSplash">#52056F</color>
     <color name="colorPlayFragment">#2b1a17</color>
+    <color name="color_question">#fcc116</color>
 </resources>
