@@ -10,6 +10,7 @@ import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.view.fragment.M001SplashFragment;
 import com.example.ditimtrieuphu.view.fragment.M002MainFragment;
 import com.example.ditimtrieuphu.view.fragment.M003PlayFragment;
+import com.example.ditimtrieuphu.view.fragment.M004QuestionFragment;
 import com.example.ditimtrieuphu.viewmodel.MainViewModel;
 
 
@@ -44,6 +45,7 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
                 playFragment.setCallBack(this);
                 showFragment(R.id.container_view, playFragment, true);
                 break;
+
         }
     }
 }
