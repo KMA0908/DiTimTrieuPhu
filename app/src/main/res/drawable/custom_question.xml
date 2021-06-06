@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:width="260dp"
+        android:left="10dp"
+        android:height="55dp"
+        android:drawable="@drawable/ic_question">
+    </item>
+
+    <item android:width="31dp"
+        android:bottom="21dp"
+        android:left="4dp">
+        <rotate android:fromDegrees="115"
+            android:toDegrees="115">
+            <shape android:shape="line">
+                <stroke android:width="4dp"
+                    android:color="@color/color_question"/>
+            </shape>
+        </rotate>
+    </item>
+
+    <item android:bottom="43dp"
+        android:width="240dp"
+        android:left="22dp">
+        <shape android:shape="line">
+            <stroke android:width="4dp"
+                android:color="@color/color_question"/>
+        </shape>
+    </item>
+
+    <item android:top="43dp"
+        android:width="238dp"
+        android:left="24dp">
+        <shape android:shape="line">
+            <stroke android:width="4dp"
+                android:color="@color/color_question"/>
+        </shape>
+    </item>
+
+    <item android:width="30dp"
+        android:top="23dp"
+        android:left="6dp">
+        <rotate android:fromDegrees="59"
+            android:toDegrees="59">
+            <shape android:shape="line">
+                <stroke android:width="4dp"
+                    android:color="@color/color_question"/>
+            </shape>
+        </rotate>
+    </item>
+
+    <item android:width="29dp"
+        android:top="23dp"
+
+        android:left="249dp">
+        <rotate android:fromDegrees="113"
+            android:toDegrees="113">
+            <shape android:shape="line">
+                <stroke android:width="4dp"
+                    android:color="@color/color_question"/>
+            </shape>
+        </rotate>
+    </item>
+
+    <item android:width="30dp"
+        android:bottom="22dp"
+        android:left="248dp">
+        <rotate android:fromDegrees="247"
+            android:toDegrees="247">
+            <shape android:shape="line">
+                <stroke android:width="4dp"
+                    android:color="@color/color_question"/>
+            </shape>
+        </rotate>
+    </item>
+
+    <item android:width="15dp"
+        android:left="0dp">
+        <shape android:shape="line">
+            <stroke android:width="4dp"
+                android:color="@color/color_question"/>
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+    <item android:width="15dp"
+        android:left="267dp">
+        <shape android:shape="line">
+            <stroke android:width="4dp"
+                android:color="@color/color_question"/>
+            <corners android:radius="30dp"/>
+        </shape>
+    </item>
+
+</layer-list>

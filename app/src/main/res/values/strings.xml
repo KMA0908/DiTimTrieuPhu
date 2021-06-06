@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">DiTimTrieuPhu</string>
+
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <dimen name="text_size_question">22sp</dimen>
+    <dimen name="margi_top_question">13dp</dimen>
+>>>>>>> master
 </resources>
