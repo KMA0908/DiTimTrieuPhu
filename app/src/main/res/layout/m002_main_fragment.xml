@@ -27,10 +27,10 @@
         android:layout_weight="3">
 
         <ImageView
-            android:layout_marginTop="20dp"
             android:id="@+id/iv_play_now"
             android:layout_width="250dp"
             android:layout_height="100dp"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_play_now" />
     </LinearLayout>
 
@@ -40,30 +40,30 @@
         android:layout_weight="3">
 
         <TableRow
-            android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
             <ImageView
-                android:layout_marginStart="20dp"
                 android:id="@+id/archivement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/ic_champion" />
 
             <ImageView
-                android:layout_marginStart="40dp"
-
                 android:id="@+id/iv_info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_info"/>
-            <ImageView
+                android:layout_width="46dp"
+                android:layout_height="46dp"
                 android:layout_marginStart="40dp"
+                android:src="@drawable/ic_info" />
+
+            <ImageView
                 android:id="@+id/iv_music"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:src="@drawable/ic_sound"/>
+                android:layout_marginStart="40dp"
+                android:src="@drawable/ic_sound" />
         </TableRow>
 
     </LinearLayout>
