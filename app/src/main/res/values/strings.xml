@@ -2,5 +2,5 @@
     <string name="app_name">DiTimTrieuPhu</string>
 
     <dimen name="text_size_question">22sp</dimen>
-    <dimen name="margi_top_question">13dp</dimen>
+    <dimen name="margi_top_question">8dp</dimen>
 </resources>

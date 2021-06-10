@@ -9,7 +9,7 @@ import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
 public class M002MainFragment extends BaseFragment<MainFragViewModel> {
-    public static final String KEY_SHOW_PLAY_FRAGMENT = "KEY_SHOW_PLAY_FRAGMENT";
+    public static final String KEY_SHOW_QUESTION_FRAGMENT = "KEY_SHOW_QUESTION_FRAGMENT";
     private OnActionCallBack callBack;
     private ImageView ivPlayNow;
     @Override
@@ -25,7 +25,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void showPlayFragment() {
-        callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT,null);
+        callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
     }
 
     @Override
