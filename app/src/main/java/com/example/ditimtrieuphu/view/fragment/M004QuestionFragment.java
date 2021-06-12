@@ -1,4 +1,4 @@
-gpackage com.example.ditimtrieuphu.view.fragment;
+package com.example.ditimtrieuphu.view.fragment;
 
 import android.media.MediaPlayer;
 import android.view.View;
@@ -9,13 +9,14 @@ import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.entity.Question;
 import com.example.ditimtrieuphu.view.adapter.QuestionAdapter;
+import com.example.ditimtrieuphu.view.fragment.BaseFragment;
 import com.example.ditimtrieuphu.viewmodel.QuestionViewModel;
 
 import java.util.ArrayList;
 
 public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
     private OnActionCallBack callBack;
-    public static final String KEY_SHOW_PLAY_FRAGMENT = "KEY_SHOW_PLAY_FRAGMENT";
+    public static final String KEY_SHOW_QUESTION_DETAIL = "KEY_SHOW_QUESTION_DETAIL";
 
     private MediaPlayer mediaPlayer;
     private ArrayList<Question> list;
@@ -44,7 +45,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     private void showPlayFragment() {
-        callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT,null);
+        callBack.onCallBack(KEY_SHOW_QUESTION_DETAIL,null);
     }
 
     @Override
