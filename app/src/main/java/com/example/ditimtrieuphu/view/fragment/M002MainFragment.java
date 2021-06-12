@@ -13,6 +13,7 @@ import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
 public class M002MainFragment extends BaseFragment<MainFragViewModel> {
+
     public static M002MainFragment m002MainFragment;
     public static final String KEY_SHOW_PLAY_FRAGMENT = "KEY_SHOW_PLAY_FRAGMENT";
 
@@ -71,7 +72,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void showPlayFragment() {
-        callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT,null);
+        callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
     }
 
     private void showTutorial() {
