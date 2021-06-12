@@ -1,9 +1,5 @@
 package com.example.ditimtrieuphu.view.act;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
 
