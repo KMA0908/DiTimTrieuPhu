@@ -12,12 +12,12 @@ import com.example.ditimtrieuphu.roomdatabse.Repository;
 import java.util.List;
 
 public class QuestionViewModel extends ViewModel {
-    public static LiveData<List<Question>> allQuestions;
+    public static List<Question> allQuestions;
 
     public static Repository repository;
 
     public QuestionViewModel(Context context) {
-        repository = new Repository(context);
-        allQuestions = AppDatabase.getAllQuestions();
+         repository= new Repository(context);
+         allQuestions = repository.getAllQuestions();
     }
 }

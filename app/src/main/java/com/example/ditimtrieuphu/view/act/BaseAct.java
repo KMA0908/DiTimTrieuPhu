@@ -11,6 +11,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.entity.Manager;
+import com.example.ditimtrieuphu.roomdatabse.AppDatabase;
+import com.example.ditimtrieuphu.viewmodel.QuestionViewModel;
 
 public abstract class BaseAct<T extends ViewModel> extends AppCompatActivity implements View.OnClickListener {
     protected T mModel;
@@ -18,8 +21,8 @@ public abstract class BaseAct<T extends ViewModel> extends AppCompatActivity imp
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutID());
-        mModel=new ViewModelProvider(this).get(getClassViewModel());
-        initViews();
+//        mModel=new ViewModelProvider(this).get(getClassViewModel());
+//        initViews();
     }
 
     protected abstract Class<T> getClassViewModel();

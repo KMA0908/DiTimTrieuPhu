@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -24,18 +24,42 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100">
+        <schema name="main" object-types="table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="64ce6682-a1b1-4269-8fcf-6daf7b499a6e">
-      <console name="Connection" type="STANDARD" schema="" session="Main" />
+    <connection id="8b1009fc-185e-4f74-aeac-1e808fcdb100">
+      <console name="Connection 1" type="STANDARD" schema="main" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="64ce6682-a1b1-4269-8fcf-6daf7b499a6e" />
+    <connection id="8b1009fc-185e-4f74-aeac-1e808fcdb100" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Manager" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.sqlite_sequence" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question" active-filter-id="a9e6d2f1-a8d4-4c63-b606-1650820b587f">
+      <filter id="fec695fc-47b1-4ab1-9feb-b55889cb1f13" name="Đường Fructozo là gì?" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="question" operator="=" value="Đường Fructozo là gì?" active="true" />
+      </filter>
+      <filter id="a9e6d2f1-a8d4-4c63-b606-1650820b587f" name="13" temporary="false" custom-name="false" type="basic" join-type="AND">
+        <condition column="level" operator="=" value="13" active="true" />
+      </filter>
+    </filter-actions>
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question4" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.HighScore" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question3" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question13" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question1" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.sqlite_stat1" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question11" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="8b1009fc-185e-4f74-aeac-1e808fcdb100" dataset="main.Question10" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -44,7 +68,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/app/src/main/assets/Question.db" connection-id="virtual-sqlite-connection" session-id="MAIN" current-schema="" />
+    <mapping file-url="file://$PROJECT_DIR$/app/src/main/assets/Question.db" connection-id="64ce6682-a1b1-4269-8fcf-6daf7b499a6e" session-id="POOL" current-schema="main" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -62,17 +86,19 @@
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="SQLITE" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="64ce6682-a1b1-4269-8fcf-6daf7b499a6e" active="true">
+      <connection id="8b1009fc-185e-4f74-aeac-1e808fcdb100" active="true">
         <database>
-          <name value="Connection" />
+          <name value="Connection 1" />
           <description value="" />
           <database-type value="SQLITE" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="3.21" />
           <driver-source value="BUILTIN" />
           <driver-library value="" />
           <driver value="" />
@@ -81,7 +107,7 @@
           <port value="" />
           <database value="" />
           <files>
-            <file path="sqlite.db" schema="main" />
+            <file path="C:\Users\tolap\Documents\GitHub\DiTimTrieuPhu\app\src\main\assets\Question.db" schema="main" />
           </files>
           <type value="NONE" />
           <user value="" />
