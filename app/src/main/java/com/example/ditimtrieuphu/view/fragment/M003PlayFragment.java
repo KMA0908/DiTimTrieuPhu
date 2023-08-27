@@ -1,11 +1,13 @@
 package com.example.ditimtrieuphu.view.fragment;
 
 import android.media.MediaPlayer;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +19,8 @@ import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.async.QuestionManager;
 import com.example.ditimtrieuphu.database.AppDatabase;
 import com.example.ditimtrieuphu.entity.Question;
+import com.example.ditimtrieuphu.view.dialog.BarChartQuestion;
+import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
 import java.util.ArrayList;
@@ -27,6 +31,10 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     public static final String KEY_SHOW_QUESTION_FRAGMENT = "KEY_SHOW_QUESTION_FRAGMENT";
     public static final String KEY_SHOW_MAIN_FRAGMENT = "KEY_SHOW_MAIN_FRAGMENT";
     private OnActionCallBack callBack;
+    private ProgressBar progressBar;
+
+    private TextView timerTextView;
+
     private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion;
     private ImageView ivCaseA,ivCaseB,ivCaseC,ivCaseD,ivHelp50,ivChangeQuestion,ivAudienceHelp,ivCallHelp;
     private FrameLayout frameCaseA,frameCaseB,frameCaseC,frameCaseD;
@@ -40,6 +48,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         index = 1;
         tvIndexQuestion = findViewById(R.id.tv_index_question);
         tvQuestion = findViewById(R.id.question);
+        progressBar = findViewById(R.id.timeQuestion);
         tvCaseA = findViewById(R.id.tv_caseA);
         tvCaseB = findViewById(R.id.tv_caseB);
         tvCaseC = findViewById(R.id.tv_caseC);
@@ -52,11 +61,13 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         frameCaseB = findViewById(R.id.frame_caseB);
         frameCaseC = findViewById(R.id.frame_caseC);
         frameCaseD = findViewById(R.id.frame_caseD);
+        timerTextView = findViewById(R.id.timerTextView);
         ivHelp50 = findViewById(R.id.iv_help_50_50, this);
         ivChangeQuestion = findViewById(R.id.iv_change_question_help, this);
         ivAudienceHelp = findViewById(R.id.iv_audience_help, this);
         ivCallHelp = findViewById(R.id.iv_call_help, this);
         findViewById(R.id.icon_person, this);
+        countDownQuestion();
         AppDatabase database =  Room.databaseBuilder(getActivity(),
                         AppDatabase.class, "databases/Question.db")
                 .allowMainThreadQueries()
@@ -78,6 +89,24 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         });
 
         playMusic();
+    }
+
+    private void countDownQuestion() {
+        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                progressBar.setProgress((int) (30000 - millisUntilFinished));
+                long secondsLeft = millisUntilFinished / 1000;
+                timerTextView.setText(String.valueOf(secondsLeft));
+            }
+
+            @Override
+            public void onFinish() {
+                timerTextView.setText("0");
+            }
+        };
+
+        countDownTimer.start();
     }
 
     private void setStateHelp() {
@@ -185,8 +214,13 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 }
             });
         } else if (v.getId() == R.id.iv_audience_help) {
-
+            showAudienceHelp();
         }
+    }
+
+    private void showAudienceHelp() {
+        BarChartQuestion barChartQuestion = new BarChartQuestion();
+        barChartQuestion.show(getActivity().getFragmentManager(), "play_Fragment");
     }
 
     private void playHelp50Music() {
