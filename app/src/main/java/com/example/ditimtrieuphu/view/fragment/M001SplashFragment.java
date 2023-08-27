@@ -7,7 +7,7 @@ import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.viewmodel.SplashViewModel;
 
 public class M001SplashFragment extends BaseFragment<SplashViewModel> {
-    public static final String KEY_SHOW_MAIN_FRAGMENT = "KEY_SHOW_MAIN_FRAGMENT";
+    public static final String KEY_SHOW_HOME_FRAGMENT = "KEY_SHOW_HOME_FRAGMENT";
     private OnActionCallBack mCallBack;
 
     public void setmCallBack(OnActionCallBack mCallBack) {
@@ -30,6 +30,6 @@ public class M001SplashFragment extends BaseFragment<SplashViewModel> {
     }
 
     private void gotoMainFragment() {
-        mCallBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT, null);
+        mCallBack.onCallBack(KEY_SHOW_HOME_FRAGMENT, null);
     }
 }

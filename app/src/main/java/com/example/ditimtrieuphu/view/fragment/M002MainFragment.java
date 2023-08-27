@@ -35,7 +35,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
          ivTutorial=findViewById(R.id.iv_info, this);
          ivMusic=findViewById(R.id.iv_music, this);
          ivHighScore=findViewById(R.id.iv_highScore, this);
-
+        // use foreground service
          backGoundMusic = MediaPlayer.create(getActivity(), R.raw.background_music);
          backGoundMusic.setLooping(true);
          backGoundMusic.start();

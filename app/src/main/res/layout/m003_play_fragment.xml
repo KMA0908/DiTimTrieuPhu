@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_splash"
@@ -22,7 +22,7 @@
                 android:id="@+id/icon_person"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="12dp"
                 android:src="@drawable/ic_no_image" />
         </LinearLayout>
 
@@ -92,6 +92,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/iv_change_question_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_reset" />
@@ -104,6 +105,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/iv_help_50_50"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_50_50" />
@@ -116,6 +118,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/iv_audience_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_audiece" />
@@ -128,6 +131,7 @@
             android:layout_weight="1">
 
             <ImageView
+                android:id="@+id/iv_call_help"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_call" />
@@ -165,6 +169,7 @@
             android:src="@drawable/ic_border_question"/>
 
         <TextView
+            android:id="@+id/tv_index_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -175,72 +180,88 @@
     </FrameLayout>
 
     <FrameLayout
+        android:id="@+id/frame_caseA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingHorizontal="30dp"
-            android:src="@drawable/ic_play_answer"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="A. Lạnh"
-            android:textSize="15dp"
-            android:textColor="@color/white"/>
-    </FrameLayout> <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:src="@drawable/ic_play_answer"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="B. Trống"
-        android:textSize="15dp"
-        android:textColor="@color/white"/>
-</FrameLayout> <FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="30dp"
-        android:src="@drawable/ic_play_answer"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="C. Quạnh"
-        android:textSize="15dp"
-        android:textColor="@color/white"/>
-</FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
+            android:id="@+id/iv_caseA"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
             android:src="@drawable/ic_play_answer" />
 
         <TextView
+            android:id="@+id/tv_caseA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="A. Lạnh"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_caseB"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_caseB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:src="@drawable/ic_play_answer" />
+
+        <TextView
+            android:id="@+id/tv_caseB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="B. Trống"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_caseC"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_caseC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:src="@drawable/ic_play_answer" />
+
+        <TextView
+            android:id="@+id/tv_caseC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="C. Quạnh"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/frame_caseD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_caseD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="30dp"
+            android:src="@drawable/ic_play_answer" />
+
+        <TextView
+            android:id="@+id/tv_caseD"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
