@@ -21,13 +21,11 @@ import com.example.ditimtrieuphu.view.fragment.M002MainFragment;
 
 import static com.example.ditimtrieuphu.R.color.black;
 
-public class HighScoreActivity extends AppCompatActivity {
+public class HighScoreActivity extends BaseAct {
 
     private RecyclerView recyclerView;
 
     private ImageView highScoreBackBtn;
-
-    private MediaPlayer backGoundMusic;
 
     private boolean musicIsOn = false;
 
@@ -37,16 +35,22 @@ public class HighScoreActivity extends AppCompatActivity {
     private String dates[] = {"01/01/2021", "02/02/2021", "03/03/2021", "04/04/2021"};
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_score);
+    protected Class getClassViewModel() {
+        return null;
+    }
 
+    @Override
+    protected int getLayoutID() {
+        return R.layout.activity_high_score;
+    }
+
+    @Override
+    protected void initViews() {
         recyclerView = findViewById(R.id.recyclerView);
 
         if(M002MainFragment.m002MainFragment.musicIsOn) {
-            backGoundMusic = MediaPlayer.create(this, R.raw.background_music_c);
-            backGoundMusic.setLooping(true);
-            backGoundMusic.start();
+            // Minh: su dung service de phat nhac
+            mService.startBackgroundMusic(R.raw.background_music_c, true);
             musicIsOn = true;
         }
 
@@ -67,8 +71,8 @@ public class HighScoreActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         if(musicIsOn) {
-            backGoundMusic.pause();
-            backGoundMusic.release();
+            // Minh: dung service phat nhac
+            mService.pauseBackgroundMusic();
         }
     }
 }

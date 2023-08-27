@@ -30,7 +30,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion;
     private ImageView ivCaseA,ivCaseB,ivCaseC,ivCaseD,ivHelp50,ivChangeQuestion,ivAudienceHelp,ivCallHelp;
     private FrameLayout frameCaseA,frameCaseB,frameCaseC,frameCaseD;
-    private MediaPlayer mediaPlayer,mPlayer,mPlayer50Help, mediaPlayerWin;
+    private MediaPlayer mPlayer,mPlayer50Help, mediaPlayerWin;
     private String trueCase;
     private int index;
     private List<FrameLayout> frameCaseList ;
@@ -77,7 +77,10 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             }
         });
 
-        playMusic();
+        Log.d("MinhNTn", "initViews: ");
+        if (mService.isBgMusicUserSetting()) {
+            mService.startBackgroundMusic();
+        }
     }
 
     private void setStateHelp() {
@@ -94,18 +97,6 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         }
     }
 
-    private void playMusic() {
-        if(mediaPlayer == null){
-            mediaPlayer = MediaPlayer.create(getContext(), R.raw.background_music);
-        }
-        mediaPlayer.start();
-        mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-            @Override
-            public void onCompletion(MediaPlayer mp) {
-                mediaPlayer.start();
-            }
-        });
-    }
     private void initDataQuestion(Object data) {
         List<Question> listQuestion = (List<Question>) data;
         tvQuestion.setText(listQuestion.get(0).getQuestion());
@@ -355,7 +346,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                                 @Override
                                 public void run() {
                                     callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
-                                    mediaPlayer.stop();
+                                    mService.stopBackgroundMusic();
                                 }
                             },2500);
 

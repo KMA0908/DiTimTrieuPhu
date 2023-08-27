@@ -25,8 +25,6 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
 
     public boolean musicIsOn = true;
 
-    private MediaPlayer backGoundMusic;
-
     @Override
     protected void initViews() {
          m002MainFragment = this;
@@ -35,10 +33,10 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
          ivTutorial=findViewById(R.id.iv_info, this);
          ivMusic=findViewById(R.id.iv_music, this);
          ivHighScore=findViewById(R.id.iv_highScore, this);
-        // use foreground service
-         backGoundMusic = MediaPlayer.create(getActivity(), R.raw.background_music);
-         backGoundMusic.setLooping(true);
-         backGoundMusic.start();
+
+         // Minh: bat dau phat nhac nen
+        mService.startBackgroundMusic(R.raw.background_music, true);
+        mService.setBgMusicUserSetting(musicIsOn);
     }
 
     @Override
@@ -60,14 +58,16 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     @Override
     public void onStop() {
         super.onStop();
-        backGoundMusic.pause();
+        // Minh: sua lai dung service
+        mService.pauseBackgroundMusic();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        if(!backGoundMusic.isPlaying() && musicIsOn) {
-            backGoundMusic.start();
+        // Minh: sua lai dung service
+        if(musicIsOn) {
+            mService.startBackgroundMusic();
         }
     }
 
@@ -89,13 +89,16 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         if(musicIsOn == true) {
             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound_off));
             musicIsOn = false;
-            backGoundMusic.pause();
+            // Minh: sua lai dung service
+            mService.pauseBackgroundMusic();
         }
         else {
             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound));
             musicIsOn = true;
-            backGoundMusic.start();
+            // Minh: sua lai dung service
+            mService.startBackgroundMusic();
         }
+        mService.setBgMusicUserSetting(musicIsOn);
     }
 
     @Override

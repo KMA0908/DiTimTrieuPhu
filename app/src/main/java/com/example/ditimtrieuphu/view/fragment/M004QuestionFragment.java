@@ -2,6 +2,7 @@ package com.example.ditimtrieuphu.view.fragment;
 
 import android.media.MediaPlayer;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -62,6 +63,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     private void showPlayFragment() {
+        Log.d("MinhNTn", "showPlayFragment: ");
         callBack.onCallBack(KEY_SHOW_QUESTION_DETAIL,null);
     }
 
@@ -107,6 +109,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
         recyclerView.setAdapter(adapter);
     }
     private void playMusic() {
+        Log.d("MinhNTn", "playMusic: ");
         if(mediaPlayer == null){
             mediaPlayer = MediaPlayer.create(getContext(), R.raw.luatchoi_b);
         }
@@ -114,6 +117,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                Log.d("MinhNTn", "onCompletion: ");
                 mp = MediaPlayer.create(getContext(), R.raw.gofind);
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {

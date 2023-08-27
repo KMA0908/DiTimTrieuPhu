@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ditimtrieuphu.App;
+import com.example.ditimtrieuphu.AppService;
 import com.example.ditimtrieuphu.Storage;
 
 
@@ -20,6 +21,10 @@ public abstract class BaseFragment<T extends ViewModel> extends Fragment impleme
     protected T mModel;
     protected View rootView;
     protected Context mContext;
+
+    // Minh: them tham chieu den service de dung trong fragment - start
+    protected AppService mService;
+    // Minh: them tham chieu den service de dung trong fragment - end
 
     @Override
     public final void onAttach(@NonNull Context context) {
@@ -61,5 +66,10 @@ public abstract class BaseFragment<T extends ViewModel> extends Fragment impleme
 
     protected final Storage getStorage(){
         return App.getInstance().getStorage();
+    }
+
+    // Minh: them set service
+    public void setService(AppService service) {
+        this.mService = service;
     }
 }
