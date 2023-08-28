@@ -23,7 +23,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     private ImageView ivMusic;
     private ImageView ivHighScore;
 
-    public boolean musicIsOn = true;
+    public boolean musicIsOn;
 
     @Override
     protected void initViews() {
@@ -34,9 +34,13 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
          ivMusic=findViewById(R.id.iv_music, this);
          ivHighScore=findViewById(R.id.iv_highScore, this);
 
-         // Minh: bat dau phat nhac nen
-        mService.startBackgroundMusic(R.raw.background_music, true);
-        mService.setBgMusicUserSetting(musicIsOn);
+         // Minh: dong bo theo service
+         musicIsOn = mService.isBgMusicUserSetting();
+         if (musicIsOn) {
+             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound));
+         } else {
+             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound_off));
+         }
     }
 
     @Override
@@ -59,15 +63,16 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     public void onStop() {
         super.onStop();
         // Minh: sua lai dung service
-        mService.pauseBackgroundMusic();
+        mService.stopBackgroundMusic();
     }
 
     @Override
     public void onStart() {
         super.onStart();
         // Minh: sua lai dung service
-        if(musicIsOn) {
-            mService.startBackgroundMusic();
+        // Minh: bat dau phat nhac nen theo on/off
+        if (musicIsOn) {
+            mService.startBackgroundMusic(R.raw.background_music, true);
         }
     }
 
@@ -96,7 +101,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound));
             musicIsOn = true;
             // Minh: sua lai dung service
-            mService.startBackgroundMusic();
+            mService.startBackgroundMusic(R.raw.background_music, true);
         }
         mService.setBgMusicUserSetting(musicIsOn);
     }

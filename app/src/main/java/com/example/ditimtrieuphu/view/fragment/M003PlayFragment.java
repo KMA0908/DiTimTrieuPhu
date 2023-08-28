@@ -77,9 +77,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             }
         });
 
-        Log.d("MinhNTn", "initViews: ");
         if (mService.isBgMusicUserSetting()) {
-            mService.startBackgroundMusic();
+            mService.startBackgroundMusic(R.raw.background_music, true);
         }
     }
 

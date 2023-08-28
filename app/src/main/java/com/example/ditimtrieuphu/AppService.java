@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -14,7 +15,7 @@ import androidx.annotation.Nullable;
 public class AppService extends Service {
     private IBinder mBinder;
     private MediaPlayer mBackgroundMediaPlayer;
-    private boolean mBgMusicUserSetting;
+    private boolean mBgMusicUserSetting = true; // on/off bg music theo user
 
     @Override
     public void onCreate() {
@@ -43,8 +44,13 @@ public class AppService extends Service {
      * Bat dau phat nhac, su dung nhac da duoc set truoc do
      */
     public void startBackgroundMusic() {
+        Log.d("MinhNTn", "startBackgroundMusic: 1");
         if (!mBackgroundMediaPlayer.isPlaying()) {
-            mBackgroundMediaPlayer.start();
+            Log.d("MinhNTn", "startBackgroundMusic: 2");
+            mBackgroundMediaPlayer.setOnPreparedListener(mediaPlayer -> {
+                Log.d("MinhNTn", "startBackgroundMusic: ");
+                mediaPlayer.start();
+            });
         }
     }
 

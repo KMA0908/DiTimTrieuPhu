@@ -123,6 +123,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
+                        Log.d("MinhNTn", "onCompletion: 1");
                         showPlayFragment();
                     }
                 });
