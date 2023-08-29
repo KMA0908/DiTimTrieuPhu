@@ -80,70 +80,41 @@
         android:padding="10dp"
         android:weightSum="5">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_stop"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/ic_stop" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_stop" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_change_question_help"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/ic_reset" />
 
-            <ImageView
-                android:id="@+id/iv_change_question_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_reset" />
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_help_50_50"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/ic_50_50" />
 
-            <ImageView
-                android:id="@+id/iv_help_50_50"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_50_50" />
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_audience_help"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/ic_audiece" />
 
-            <ImageView
-                android:id="@+id/iv_audience_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_audiece" />
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
+            android:id="@+id/iv_call_help"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:src="@drawable/ic_call" />
 
-            <ImageView
-                android:id="@+id/iv_call_help"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_call" />
-        </LinearLayout>
     </LinearLayout>
 
     <FrameLayout

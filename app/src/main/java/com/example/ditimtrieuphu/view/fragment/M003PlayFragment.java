@@ -1,5 +1,6 @@
 package com.example.ditimtrieuphu.view.fragment;
 
+import android.annotation.SuppressLint;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -20,7 +21,7 @@ import com.example.ditimtrieuphu.async.QuestionManager;
 import com.example.ditimtrieuphu.database.AppDatabase;
 import com.example.ditimtrieuphu.entity.Question;
 import com.example.ditimtrieuphu.view.dialog.BarChartQuestion;
-import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
+import com.example.ditimtrieuphu.view.dialog.HelpCallDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
 import java.util.ArrayList;
@@ -67,6 +68,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         ivAudienceHelp = findViewById(R.id.iv_audience_help, this);
         ivCallHelp = findViewById(R.id.iv_call_help, this);
         findViewById(R.id.icon_person, this);
+        findViewById(R.id.iv_stop, this);
         countDownQuestion();
         AppDatabase database =  Room.databaseBuilder(getActivity(),
                         AppDatabase.class, "databases/Question.db")
@@ -166,56 +168,97 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.icon_person) {
-            callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
-        } else if (v.getId() == R.id.iv_caseA) {
-            handleClickQuestion(R.id.iv_caseA);
-        }else if (v.getId() == R.id.iv_caseB) {
-            handleClickQuestion(R.id.iv_caseB);
-        }else if (v.getId() == R.id.iv_caseC) {
-            handleClickQuestion(R.id.iv_caseC);
-        } else if (v.getId() == R.id.iv_caseD) {
-            handleClickQuestion(R.id.iv_caseD);
-        } else if (v.getId() == R.id.iv_help_50_50) {
-            if (!App.getInstance().getStorage().isState50()) {
-                playHelp50Music();
-                ivHelp50.setClickable(false);
-                App.getInstance().getStorage().setState50(true);
-                ivHelp50.setImageResource(R.drawable.ic_50_50_done);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        Random random = new Random();
-                        List<Integer> hiddenIndices = new ArrayList<>();
-                        while (hiddenIndices.size() < 2) {
-                            int randomIndex = random.nextInt(frameCaseList.size());
-                            if (!hiddenIndices.contains(randomIndex)) {
-                                hiddenIndices.add(randomIndex);
-                                frameCaseList.get(randomIndex).setVisibility(View.GONE);
+        switch (v.getId()) {
+            case R.id.icon_person :
+                callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
+                break;
+            case R.id.iv_caseA :
+                handleClickQuestion(R.id.iv_caseA);
+                break;
+            case R.id.iv_caseB :
+                handleClickQuestion(R.id.iv_caseB);
+                break;
+            case R.id.iv_caseC :
+                handleClickQuestion(R.id.iv_caseC);
+                break;
+            case R.id.iv_caseD :
+                handleClickQuestion(R.id.iv_caseD);
+                break;
+            case R.id.iv_help_50_50 :
+                if (!App.getInstance().getStorage().isState50()) {
+                    playHelp50Music();
+                    ivHelp50.setClickable(false);
+                    App.getInstance().getStorage().setState50(true);
+                    ivHelp50.setImageResource(R.drawable.ic_50_50_done);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Random random = new Random();
+                            List<Integer> hiddenIndices = new ArrayList<>();
+                            while (hiddenIndices.size() < 2) {
+                                int randomIndex = random.nextInt(frameCaseList.size());
+                                if (!hiddenIndices.contains(randomIndex)) {
+                                    hiddenIndices.add(randomIndex);
+                                    frameCaseList.get(randomIndex).setVisibility(View.GONE);
+                                }
                             }
                         }
-                    }
-                },5000);
-            } else {
-                Toast.makeText(App.getInstance(),"Bạn đã dùng sự trợ giúp 50/50 rồi",Toast.LENGTH_SHORT).show();
-            }
-        } else if (v.getId() == R.id.iv_change_question_help) {
-            ivChangeQuestion.setClickable(false);
-            ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
-            QuestionManager.getInstance().getQuestionByLevel(index, new QuestionManager.OnResultCallBack() {
-                @Override
-                public void callBack(Object data) {
-
-                    getActivity().runOnUiThread(() -> {
-                        initDataQuestion(data);
-                    });
+                    },5000);
+                } else {
+                    Toast.makeText(App.getInstance(),"Bạn đã dùng sự trợ giúp 50/50 rồi",Toast.LENGTH_SHORT).show();
                 }
-            });
-        } else if (v.getId() == R.id.iv_audience_help) {
-            showAudienceHelp();
+                break;
+            case R.id.iv_change_question_help:
+                if (!App.getInstance().getStorage().isStateChange()) {
+                    ivChangeQuestion.setClickable(false);
+                    App.getInstance().getStorage().setStateChange(true);
+                    ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
+                    QuestionManager.getInstance().getQuestionByLevel(index, new QuestionManager.OnResultCallBack() {
+                        @Override
+                        public void callBack(Object data) {
+
+                            getActivity().runOnUiThread(() -> {
+                                initDataQuestion(data);
+                            });
+                        }
+                    });
+                } else {
+                    Toast.makeText(App.getInstance(),"Bạn đã dùng sự trợ giúp đổi câu hỏi khác rồi",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.iv_audience_help:
+                if (!App.getInstance().getStorage().isStateAudi()) {
+                    ivAudienceHelp.setClickable(false);
+                    ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
+                    App.getInstance().getStorage().setStateAudi(true);
+                    showAudienceHelp();
+                } else {
+                    Toast.makeText(App.getInstance(),"Bạn đã dùng sự trợ giúp hỏi ý kiến khán giả trong trường quay rồi",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.iv_call_help:
+                if (!App.getInstance().getStorage().isStateCall()) {
+                    ivCallHelp.setClickable(false);
+                    ivCallHelp.setImageResource(R.drawable.ic_phone_done);
+                    App.getInstance().getStorage().setStateCall(true);
+                    showCallDialog();
+                } else {
+                    Toast.makeText(App.getInstance(),"Bạn đã dùng sự trợ giúp gọi điện thoại người thân rồi",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.iv_stop:
+                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                break;
+            default:
         }
+    }
+
+    private void showCallDialog() {
+        HelpCallDialog helpCallDialog = new HelpCallDialog();
+        helpCallDialog.show(getActivity().getSupportFragmentManager(),HelpCallDialog.TAG);
     }
 
     private void showAudienceHelp() {
@@ -252,6 +295,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         });
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void handleClickQuestion(int id) {
         switch (id) {
             case R.id.iv_caseA: {
@@ -292,6 +336,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     }
 
+    @SuppressLint("NonConstantResourceId")
     private void handleUserAnswer(int id) {
         int idSource = 0;
         int trueAns = 0;
@@ -299,57 +344,77 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         switch (id) {
             case R.id.iv_caseA: {
                 idSource = R.raw.ans_a;
-                if (trueCase.equals("1")) {
-                    trueAns = R.raw.true_a;
-                    isUserSelect = true;
-                } else if (trueCase.equals("2")) {
-                    trueAns = R.raw.lose_b2;
-                } else if (trueCase.equals("3")) {
-                    trueAns = R.raw.lose_c2;
-                } else {
-                    trueAns = R.raw.lose_d2;
+                switch (trueCase) {
+                    case "1":
+                        trueAns = R.raw.true_a;
+                        isUserSelect = true;
+                        break;
+                    case "2":
+                        trueAns = R.raw.lose_b2;
+                        break;
+                    case "3":
+                        trueAns = R.raw.lose_c2;
+                        break;
+                    default:
+                        trueAns = R.raw.lose_d2;
+                        break;
                 }
                 break;
             }
             case R.id.iv_caseB: {
                 idSource = R.raw.ans_b;
-                if (trueCase.equals("1")) {
-                    trueAns = R.raw.lose_a2;
-                } else if (trueCase.equals("2")) {
-                    trueAns = R.raw.true_b;
-                    isUserSelect = true;
-                } else if (trueCase.equals("3")) {
-                    trueAns = R.raw.lose_c2;
-                } else {
-                    trueAns = R.raw.lose_d2;
+                switch (trueCase) {
+                    case "1":
+                        trueAns = R.raw.lose_a2;
+                        break;
+                    case "2":
+                        trueAns = R.raw.true_b;
+                        isUserSelect = true;
+                        break;
+                    case "3":
+                        trueAns = R.raw.lose_c2;
+                        break;
+                    default:
+                        trueAns = R.raw.lose_d2;
+                        break;
                 }
                 break;
             }
             case R.id.iv_caseC: {
                 idSource = R.raw.ans_c;
-                if (trueCase.equals("1")) {
-                    trueAns = R.raw.lose_a2;
-                } else if (trueCase.equals("2")) {
-                    trueAns = R.raw.lose_b2;
-                } else if (trueCase.equals("3")) {
-                    trueAns = R.raw.true_c;
-                    isUserSelect = true;
-                } else {
-                    trueAns = R.raw.lose_d2;
+                switch (trueCase) {
+                    case "1":
+                        trueAns = R.raw.lose_a2;
+                        break;
+                    case "2":
+                        trueAns = R.raw.lose_b2;
+                        break;
+                    case "3":
+                        trueAns = R.raw.true_c;
+                        isUserSelect = true;
+                        break;
+                    default:
+                        trueAns = R.raw.lose_d2;
+                        break;
                 }
                 break;
             }
             case R.id.iv_caseD: {
                 idSource = R.raw.ans_d;
-                if (trueCase.equals("1")) {
-                    trueAns = R.raw.lose_a2;
-                } else if (trueCase.equals("2")) {
-                    trueAns = R.raw.lose_b2;
-                } else if (trueCase.equals("3")) {
-                    trueAns = R.raw.lose_c2;
-                } else {
-                    trueAns = R.raw.true_d2;
-                    isUserSelect = true;
+                switch (trueCase) {
+                    case "1":
+                        trueAns = R.raw.lose_a2;
+                        break;
+                    case "2":
+                        trueAns = R.raw.lose_b2;
+                        break;
+                    case "3":
+                        trueAns = R.raw.lose_c2;
+                        break;
+                    default:
+                        trueAns = R.raw.true_d2;
+                        isUserSelect = true;
+                        break;
                 }
                 break;
             }

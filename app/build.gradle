@@ -3,13 +3,12 @@ plugins {
 }
 apply plugin: 'net.ltgt.apt'
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "com.example.ditimtrieuphu"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
 
