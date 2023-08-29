@@ -114,14 +114,15 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private void setStateHelp() {
         if (App.getInstance().getStorage().isState50()) {
             ivHelp50.setImageResource(R.drawable.ic_50_50_done);
-        } else if (App.getInstance().getStorage().isStateAudi()) {
+        }
+        if (App.getInstance().getStorage().isStateAudi()) {
             ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
-        } else if (App.getInstance().getStorage().isStateCall()){
+        }
+        if (App.getInstance().getStorage().isStateCall()){
             ivCallHelp.setImageResource(R.drawable.ic_phone_done);
-        } else if (App.getInstance().getStorage().isStateChange()){
+        }
+        if (App.getInstance().getStorage().isStateChange()){
             ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
-        } else {
-            //Do something
         }
     }
 
