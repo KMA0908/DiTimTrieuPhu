@@ -472,7 +472,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                                 public void run() {
                                     callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
                                     mediaPlayer.stop();
-                                    resetSessionUserPlay();
+                                    App.getInstance().getStorage().resetPlaySession();
                                 }
                             },2500);
 
@@ -481,14 +481,6 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 });
             }
         });
-    }
-
-    private void resetSessionUserPlay() {
-        App.getInstance().getStorage().setState50(false);
-        App.getInstance().getStorage().setStateAudi(false);
-        App.getInstance().getStorage().setStateCall(false);
-        App.getInstance().getStorage().setStateChange(false);
-        App.getInstance().getStorage().setCurrentLevel(0);
     }
 
     private void showTrueQuestion(ImageView imageView) {
