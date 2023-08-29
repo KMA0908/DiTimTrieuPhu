@@ -73,8 +73,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 .allowMainThreadQueries()
                 .build();
 
-        if (App.getInstance().getCurrentLevel() != 0 ) {
-           index = App.getInstance().getCurrentLevel();
+        if (App.getInstance().getStorage().getCurrentLevel() != 0 ) {
+           index = App.getInstance().getStorage().getCurrentLevel();
         }
         setTextForQuestion(index);
         setStateHelp();
@@ -110,13 +110,13 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void setStateHelp() {
-        if (App.getInstance().isState50()) {
+        if (App.getInstance().getStorage().isState50()) {
             ivHelp50.setImageResource(R.drawable.ic_50_50_done);
-        } else if (App.getInstance().isStateAudi()) {
+        } else if (App.getInstance().getStorage().isStateAudi()) {
             ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
-        } else if (App.getInstance().isStateCall()){
+        } else if (App.getInstance().getStorage().isStateCall()){
             ivCallHelp.setImageResource(R.drawable.ic_phone_done);
-        } else if (App.getInstance().isStateChange()){
+        } else if (App.getInstance().getStorage().isStateChange()){
             ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
         } else {
             //Do something
@@ -179,10 +179,10 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         } else if (v.getId() == R.id.iv_caseD) {
             handleClickQuestion(R.id.iv_caseD);
         } else if (v.getId() == R.id.iv_help_50_50) {
-            if (!App.getInstance().isState50()) {
+            if (!App.getInstance().getStorage().isState50()) {
                 playHelp50Music();
                 ivHelp50.setClickable(false);
-                App.getInstance().setState50(true);
+                App.getInstance().getStorage().setState50(true);
                 ivHelp50.setImageResource(R.drawable.ic_50_50_done);
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -220,7 +220,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     private void showAudienceHelp() {
         if(mPlayerAudience == null){
-            mPlayerAudience = mPlayerAudience.create(getContext(), R.raw.khan_gia);
+            mPlayerAudience = MediaPlayer.create(getContext(), R.raw.khan_gia);
         }
         mPlayerAudience.start();
         mPlayerAudience.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -418,11 +418,11 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void resetSessionUserPlay() {
-        App.getInstance().setState50(false);
-        App.getInstance().setStateAudi(false);
-        App.getInstance().setStateCall(false);
-        App.getInstance().setStateChange(false);
-        App.getInstance().setCurrentLevel(0);
+        App.getInstance().getStorage().setState50(false);
+        App.getInstance().getStorage().setStateAudi(false);
+        App.getInstance().getStorage().setStateCall(false);
+        App.getInstance().getStorage().setStateChange(false);
+        App.getInstance().getStorage().setCurrentLevel(0);
     }
 
     private void showTrueQuestion(ImageView imageView) {
@@ -445,7 +445,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private void goToNextQuestion(int level) {
         if (level == 16) {
             index = 1;
-            App.getInstance().setCurrentLevel(0);
+            App.getInstance().getStorage().setCurrentLevel(0);
             if(mediaPlayerWin == null){
                 mediaPlayerWin = MediaPlayer.create(getContext(), R.raw.best_player);
             }
@@ -463,7 +463,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
                     getActivity().runOnUiThread(() -> {
                         if (level == 6 || level == 11) {
-                            App.getInstance().setCurrentLevel(level);
+                            App.getInstance().getStorage().setCurrentLevel(level);
                             callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
                         }
                         initDataQuestion(data);

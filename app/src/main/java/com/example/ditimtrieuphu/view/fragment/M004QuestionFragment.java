@@ -33,7 +33,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
         recyclerView = findViewById(R.id.recycler_view_question);
         init();
         setUp();
-        if (App.getInstance().getCurrentLevel() != 0) {
+        if (App.getInstance().getStorage().getCurrentLevel() != 0) {
             recyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
