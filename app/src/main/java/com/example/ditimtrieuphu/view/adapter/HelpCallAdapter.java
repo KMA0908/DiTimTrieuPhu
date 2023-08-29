@@ -16,7 +16,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class HelpCallAdapter extends RecyclerView.Adapter<HelpCallAdapter.HelpCallHoder> {
+public class HelpCallAdapter extends RecyclerView.Adapter<HelpCallAdapter.HelpCallHolder> {
     private OnItemClick callBack;
 
     public void setOnItemClick(OnItemClick event) {
@@ -33,14 +33,14 @@ public class HelpCallAdapter extends RecyclerView.Adapter<HelpCallAdapter.HelpCa
 
     @NonNull
     @Override
-    public HelpCallHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HelpCallHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_call_help, parent, false);
-        return new HelpCallHoder(view);
+        return new HelpCallHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HelpCallHoder holder, int position) {
+    public void onBindViewHolder(@NonNull HelpCallHolder holder, int position) {
         holder.peopleCall = callList.get(position);
         holder.name.setText(callList.get(position).getName());
     }
@@ -50,12 +50,12 @@ public class HelpCallAdapter extends RecyclerView.Adapter<HelpCallAdapter.HelpCa
         return callList.size();
     }
 
-    public class HelpCallHoder extends RecyclerView.ViewHolder {
+    public class HelpCallHolder extends RecyclerView.ViewHolder {
         PeopleCall peopleCall;
         CircleImageView image;
         TextView name;
 
-        public HelpCallHoder(@NonNull View itemView) {
+        public HelpCallHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.iv_person_help);
             name = itemView.findViewById(R.id.tv_name_person);
