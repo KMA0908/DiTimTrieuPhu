@@ -251,6 +251,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_stop:
                 callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                App.getInstance().getStorage().resetPlaySession();
                 break;
             default:
         }

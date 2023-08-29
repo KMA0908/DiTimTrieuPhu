@@ -47,4 +47,12 @@ public class Storage {
         this.state50 = state50;
     }
 
+    public void resetPlaySession() {
+        currentLevel = 0;
+        state50 = false;
+        stateAudi = false;
+        stateChange = false;
+        stateCall = false;
+    }
+
 }
