@@ -11,7 +11,8 @@
         android:theme="@style/Theme.DiTimTrieuPhu">
         <activity android:name=".view.act.HighScoreActivity">
         </activity>
-        <activity android:name=".view.act.MainActivity">
+        <activity android:name=".view.act.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

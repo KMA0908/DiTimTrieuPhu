@@ -38,7 +38,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion;
     private ImageView ivCaseA,ivCaseB,ivCaseC,ivCaseD,ivHelp50,ivChangeQuestion,ivAudienceHelp,ivCallHelp;
     private FrameLayout frameCaseA,frameCaseB,frameCaseC,frameCaseD;
-    private MediaPlayer mediaPlayer,mPlayer,mPlayer50Help, mediaPlayerWin;
+    private MediaPlayer mediaPlayer,mPlayer,mPlayer50Help, mediaPlayerWin,mPlayerAudience;
     private String trueCase;
     private int index;
     private List<FrameLayout> frameCaseList ;
@@ -219,8 +219,24 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void showAudienceHelp() {
-        BarChartQuestion barChartQuestion = new BarChartQuestion();
-        barChartQuestion.show(getActivity().getFragmentManager(), "play_Fragment");
+        if(mPlayerAudience == null){
+            mPlayerAudience = mPlayerAudience.create(getContext(), R.raw.khan_gia);
+        }
+        mPlayerAudience.start();
+        mPlayerAudience.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp = MediaPlayer.create(getContext(), R.raw.hoi_y_kien_chuyen_gia_01b);
+                mp.start();
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        BarChartQuestion barChartQuestion = new BarChartQuestion();
+                        barChartQuestion.show(getActivity().getSupportFragmentManager(),BarChartQuestion.TAG);
+                    }
+                });
+            }
+        });
     }
 
     private void playHelp50Music() {
@@ -390,6 +406,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                                 public void run() {
                                     callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
                                     mediaPlayer.stop();
+                                    resetSessionUserPlay();
                                 }
                             },2500);
 
@@ -399,6 +416,15 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             }
         });
     }
+
+    private void resetSessionUserPlay() {
+        App.getInstance().setState50(false);
+        App.getInstance().setStateAudi(false);
+        App.getInstance().setStateCall(false);
+        App.getInstance().setStateChange(false);
+        App.getInstance().setCurrentLevel(0);
+    }
+
     private void showTrueQuestion(ImageView imageView) {
         imageView.setImageResource(R.drawable.ic_true_answer);
     }
