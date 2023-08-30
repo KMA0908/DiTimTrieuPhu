@@ -43,6 +43,9 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private String trueCase;
     private int index;
     private List<FrameLayout> frameCaseList ;
+
+    private CountDownTimer countDownTimer; // Minh: de countDownTimer lam global
+
     @Override
     protected void initViews() {
         frameCaseList =  new ArrayList<>();
@@ -94,7 +97,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void countDownQuestion() {
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+       countDownTimer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setProgress((int) (30000 - millisUntilFinished));
@@ -105,6 +108,9 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             @Override
             public void onFinish() {
                 timerTextView.setText("0");
+                //TODO thong bao roi moi ket thuc tro choi
+                endPlayerSession();
+
             }
         };
 
@@ -338,6 +344,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     @SuppressLint("NonConstantResourceId")
     private void handleClickQuestion(int id) {
+        // Minh: click cau tra loi thi dung timer lai
+        countDownTimer.cancel();
         switch (id) {
             case R.id.iv_caseA: {
                 ivCaseA.setImageResource(R.drawable.ic_play_answer_selected);
@@ -573,6 +581,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         }
                         initDataQuestion(data);
                         setTextForQuestion(level);
+                        // Minh: bat dau cau hoi moi thi start lai timer
+                        countDownQuestion();
                     });
                 }
             });
