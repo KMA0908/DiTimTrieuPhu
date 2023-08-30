@@ -209,6 +209,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             case R.id.iv_help_50_50 :
                 if (!App.getInstance().getStorage().isState50()) {
                     resetMedia();
+                    addCaseFailHelp50(trueCase);
                     playHelp50Music();
                     ivHelp50.setClickable(false);
                     App.getInstance().getStorage().setState50(true);
@@ -339,7 +340,6 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             public void onCompletion(MediaPlayer mp) {
                 mPlayer.release();
                 mPlayer = null;
-                addCaseFailHelp50(trueCase);
             }
         });
     }
@@ -580,11 +580,12 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         if (level == 6 || level == 11) {
                             App.getInstance().getStorage().setCurrentLevel(level);
                             callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
+                        } else {
+                            initDataQuestion(data);
+                            setTextForQuestion(level);
+                            // Minh: bat dau cau hoi moi thi start lai timer
+                            countDownQuestion();
                         }
-                        initDataQuestion(data);
-                        setTextForQuestion(level);
-                        // Minh: bat dau cau hoi moi thi start lai timer
-                        countDownQuestion();
                     });
                 }
             });
