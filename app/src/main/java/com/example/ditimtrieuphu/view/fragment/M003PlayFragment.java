@@ -39,7 +39,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion;
     private ImageView ivCaseA,ivCaseB,ivCaseC,ivCaseD,ivHelp50,ivChangeQuestion,ivAudienceHelp,ivCallHelp;
     private FrameLayout frameCaseA,frameCaseB,frameCaseC,frameCaseD;
-    private MediaPlayer mediaPlayer,mPlayer,mPlayer50Help, mediaPlayerWin,mPlayerAudience;
+    private MediaPlayer mediaPlayer,mPlayer;
     private String trueCase;
     private int index;
     private List<FrameLayout> frameCaseList ;
@@ -150,22 +150,33 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void addCaseFailHelp50(String trueCase) {
-        if (trueCase.equals("1")) {
-            frameCaseList.add(frameCaseB);
-            frameCaseList.add(frameCaseC);
-            frameCaseList.add(frameCaseD);
-        } else if (trueCase.equals("2")) {
-            frameCaseList.add(frameCaseA);
-            frameCaseList.add(frameCaseC);
-            frameCaseList.add(frameCaseD);
-        } else if (trueCase.equals("3")) {
-            frameCaseList.add(frameCaseB);
-            frameCaseList.add(frameCaseA);
-            frameCaseList.add(frameCaseD);
-        } else {
-            frameCaseList.add(frameCaseB);
-            frameCaseList.add(frameCaseC);
-            frameCaseList.add(frameCaseA);
+        switch (trueCase) {
+            case "1":
+                frameCaseList.add(frameCaseB);
+                frameCaseList.add(frameCaseC);
+                frameCaseList.add(frameCaseD);
+                break;
+            case "2":
+                frameCaseList.add(frameCaseA);
+                frameCaseList.add(frameCaseC);
+                frameCaseList.add(frameCaseD);
+                break;
+            case "3":
+                frameCaseList.add(frameCaseB);
+                frameCaseList.add(frameCaseA);
+                frameCaseList.add(frameCaseD);
+                break;
+            default:
+                frameCaseList.add(frameCaseB);
+                frameCaseList.add(frameCaseC);
+                frameCaseList.add(frameCaseA);
+                break;
+        }
+    }
+    private void resetMedia() {
+        if (mPlayer != null) {
+            mPlayer.release();
+            mPlayer = null;
         }
     }
 
@@ -190,6 +201,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_help_50_50 :
                 if (!App.getInstance().getStorage().isState50()) {
+                    resetMedia();
                     playHelp50Music();
                     ivHelp50.setClickable(false);
                     App.getInstance().getStorage().setState50(true);
@@ -232,6 +244,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_audience_help:
                 if (!App.getInstance().getStorage().isStateAudi()) {
+                    resetMedia();
                     ivAudienceHelp.setClickable(false);
                     ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
                     App.getInstance().getStorage().setStateAudi(true);
@@ -242,6 +255,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_call_help:
                 if (!App.getInstance().getStorage().isStateCall()) {
+                    resetMedia();
                     ivCallHelp.setClickable(false);
                     ivCallHelp.setImageResource(R.drawable.ic_phone_done);
                     App.getInstance().getStorage().setStateCall(true);
@@ -259,23 +273,46 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void showCallDialog() {
-        HelpCallDialog helpCallDialog = new HelpCallDialog();
-        helpCallDialog.show(getActivity().getSupportFragmentManager(),HelpCallDialog.TAG);
+        if(mPlayer == null){
+            mPlayer = MediaPlayer.create(getContext(), R.raw.help_call);
+        }
+        mPlayer.start();
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mPlayer.release();
+                mPlayer = null;
+                HelpCallDialog helpCallDialog = new HelpCallDialog();
+                helpCallDialog.show(getActivity().getSupportFragmentManager(), HelpCallDialog.TAG);
+                mp = MediaPlayer.create(getContext(), R.raw.help_callb);
+                mp.start();
+                mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mp) {
+                        mp.release();
+                        helpCallDialog.dismiss();
+                    }
+                });
+            }
+        });
     }
 
     private void showAudienceHelp() {
-        if(mPlayerAudience == null){
-            mPlayerAudience = MediaPlayer.create(getContext(), R.raw.khan_gia);
+        if(mPlayer == null){
+            mPlayer = MediaPlayer.create(getContext(), R.raw.khan_gia);
         }
-        mPlayerAudience.start();
-        mPlayerAudience.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mPlayer.start();
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mPlayer.release();
+                mPlayer = null;
                 mp = MediaPlayer.create(getContext(), R.raw.hoi_y_kien_chuyen_gia_01b);
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
+                        mp.release();
                         BarChartQuestion barChartQuestion = new BarChartQuestion();
                         barChartQuestion.show(getActivity().getSupportFragmentManager(),BarChartQuestion.TAG);
                     }
@@ -285,13 +322,15 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void playHelp50Music() {
-        if(mPlayer50Help == null){
-            mPlayer50Help = MediaPlayer.create(getContext(), R.raw.sound5050);
+        if(mPlayer == null){
+            mPlayer = MediaPlayer.create(getContext(), R.raw.sound5050);
         }
-        mPlayer50Help.start();
-        mPlayer50Help.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        mPlayer.start();
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mPlayer.release();
+                mPlayer = null;
                 addCaseFailHelp50(trueCase);
             }
         });
@@ -336,6 +375,12 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             default:
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        resetMedia();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -505,14 +550,15 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         if (level == 16) {
             index = 1;
             App.getInstance().getStorage().setCurrentLevel(0);
-            if(mediaPlayerWin == null){
-                mediaPlayerWin = MediaPlayer.create(getContext(), R.raw.best_player);
+            if(mPlayer == null){
+                mPlayer = MediaPlayer.create(getContext(), R.raw.best_player);
             }
-            mediaPlayerWin.start();
-            mediaPlayerWin.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            mPlayer.start();
+            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
                 public void onCompletion(MediaPlayer mp) {
-
+                     mPlayer.release();
+                     mPlayer = null;
                 }
             });
         } else {

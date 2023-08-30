@@ -21,12 +21,15 @@ import com.example.ditimtrieuphu.view.adapter.HelpCallAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class HelpCallDialog extends DialogFragment implements HelpCallAdapter.OnItemClick {
+    public static final String KEY_ANSWER = "KEY_ANSWER";
     public static String TAG = HelpCallDialog.class.getName();
     private RecyclerView recyclerView;
     private TextView tvClose;
     private List<PeopleCall> callList;
+    private List<PeopleCall> randomList;
     @Override
     public void onStart() {
         super.onStart();
@@ -46,7 +49,8 @@ public class HelpCallDialog extends DialogFragment implements HelpCallAdapter.On
         tvClose = view.findViewById(R.id.tv_thank_people);
         recyclerView = view.findViewById(R.id.rcv_people_call);
         initDummyData();
-        HelpCallAdapter helpCallAdapter = new HelpCallAdapter(App.getInstance(),callList);
+        initRandomData();
+        HelpCallAdapter helpCallAdapter = new HelpCallAdapter(App.getInstance(),randomList);
         helpCallAdapter.setOnItemClick(this);
         recyclerView.setAdapter(helpCallAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(App.getInstance()));
@@ -57,19 +61,36 @@ public class HelpCallDialog extends DialogFragment implements HelpCallAdapter.On
             }
         });
     }
-
+    private void initRandomData() {
+        randomList = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < 5; i++) {
+            int randomIndex = random.nextInt(callList.size());
+            randomList.add(callList.get(randomIndex));
+            callList.remove(randomIndex);
+        }
+    }
     private void initDummyData() {
         callList = new ArrayList<>();
-        callList.add(new PeopleCall("Huấn Hoa Hồng",""));
-        callList.add(new PeopleCall("Khá Bảnh",""));
-        callList.add(new PeopleCall("Trấn Thành",""));
-        callList.add(new PeopleCall("Đầu cắt moi",""));
-        callList.add(new PeopleCall("Nờ ô nô",""));
+        callList.add(new PeopleCall("Huấn Hoa Hồng","kkk thực ra tôi cũng k rõ câu này đâu . Nhưng tôi sẽ giúp b trl. Tôi nghĩ đáp án đúng là A",""));
+        callList.add(new PeopleCall("Khá Bảnh","Tôi nghĩ đáp án đúng là B",""));
+        callList.add(new PeopleCall("Trấn Thành","Tôi nghĩ đáp án đúng là C",""));
+        callList.add(new PeopleCall("Đầu cắt moi","Tôi nghĩ đáp án đúng là D",""));
+        callList.add(new PeopleCall("Nờ ô nô","Tôi nghĩ đáp án đúng là A",""));
+        callList.add(new PeopleCall("Huấn Hoa Hồng","kkk thực ra tôi cũng k rõ câu này đâu . Nhưng tôi sẽ giúp b trl. Tôi nghĩ đáp án đúng là A",""));
+        callList.add(new PeopleCall("Khá Bảnh","Tôi nghĩ đáp án đúng là B",""));
+        callList.add(new PeopleCall("Trấn Thành","Tôi nghĩ đáp án đúng là C",""));
+        callList.add(new PeopleCall("Đầu cắt moi","Tôi nghĩ đáp án đúng là D",""));
+        callList.add(new PeopleCall("Nờ ô nô","Tôi nghĩ đáp án đúng là A",""));
     }
 
     @Override
     public void onItemClick(PeopleCall peopleCall) {
-        Toast.makeText(App.getInstance(),"Tôi nghĩ đáp án A là câu trả đúng",Toast.LENGTH_SHORT).show();
+        PersonAnswerDialog personAnswerDialog = new PersonAnswerDialog();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY_ANSWER, peopleCall);
+        personAnswerDialog.setArguments(bundle);
+        personAnswerDialog.show(getActivity().getSupportFragmentManager(),PersonAnswerDialog.TAG);
         dismiss();
     }
 }
