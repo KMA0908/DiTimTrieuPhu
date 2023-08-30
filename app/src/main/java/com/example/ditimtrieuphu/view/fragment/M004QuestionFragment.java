@@ -114,7 +114,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
         mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp = MediaPlayer.create(getContext(), R.raw.gofind);
+                mp = MediaPlayer.create(App.getInstance(), R.raw.gofind);
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override

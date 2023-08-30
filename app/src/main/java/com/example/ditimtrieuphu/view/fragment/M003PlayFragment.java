@@ -109,8 +109,9 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             public void onFinish() {
                 timerTextView.setText("0");
                 //TODO thong bao roi moi ket thuc tro choi
-                endPlayerSession();
-
+                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                mediaPlayer.stop();
+                App.getInstance().getStorage().resetPlaySession();
             }
         };
 
@@ -218,6 +219,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             Random random = new Random();
                             List<Integer> hiddenIndices = new ArrayList<>();
                             while (hiddenIndices.size() < 2) {
+                                // to do crash
                                 int randomIndex = random.nextInt(frameCaseList.size());
                                 if (!hiddenIndices.contains(randomIndex)) {
                                     hiddenIndices.add(randomIndex);
