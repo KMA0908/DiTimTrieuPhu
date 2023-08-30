@@ -42,6 +42,9 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private String trueCase;
     private int index;
     private List<FrameLayout> frameCaseList ;
+
+    private CountDownTimer countDownTimer; // Minh: de countDownTimer lam global
+
     @Override
     protected void initViews() {
         frameCaseList =  new ArrayList<>();
@@ -92,7 +95,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void countDownQuestion() {
-        CountDownTimer countDownTimer = new CountDownTimer(30000, 1000) {
+       countDownTimer = new CountDownTimer(30000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressBar.setProgress((int) (30000 - millisUntilFinished));
@@ -103,6 +106,9 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             @Override
             public void onFinish() {
                 timerTextView.setText("0");
+                //TODO thong bao roi moi ket thuc tro choi
+                endPlayerSession();
+
             }
         };
 
@@ -214,6 +220,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 }
             });
         } else if (v.getId() == R.id.iv_audience_help) {
+            ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
             showAudienceHelp();
         }
     }
@@ -226,7 +233,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         mPlayerAudience.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp = MediaPlayer.create(getContext(), R.raw.hoi_y_kien_chuyen_gia_01b);
+                mp = MediaPlayer.create(getContext(), R.raw.hoi_y_kien_chuyen_gia_01b); // TODO crash java.lang.NullPointerException: Attempt to invoke virtual method 'android.content.res.Resources android.content.Context.getResources()' on a null object reference
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -253,6 +260,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void handleClickQuestion(int id) {
+        // Minh: click cau tra loi thi dung timer lai
+        countDownTimer.cancel();
         switch (id) {
             case R.id.iv_caseA: {
                 ivCaseA.setImageResource(R.drawable.ic_play_answer_selected);
@@ -404,9 +413,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
-                                    mediaPlayer.stop();
-                                    resetSessionUserPlay();
+                                    endPlayerSession();
                                 }
                             },2500);
 
@@ -415,6 +422,12 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 });
             }
         });
+    }
+
+    private void endPlayerSession() {
+        callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+        mediaPlayer.stop();
+        resetSessionUserPlay();
     }
 
     private void resetSessionUserPlay() {
@@ -468,6 +481,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         }
                         initDataQuestion(data);
                         setTextForQuestion(level);
+                        // Minh: bat dau cau hoi moi thi start lai timer
+                        countDownQuestion();
                     });
                 }
             });
