@@ -1,6 +1,8 @@
 package com.example.ditimtrieuphu.view.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -109,7 +111,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
             public void onFinish() {
                 timerTextView.setText("0");
                 //TODO thong bao roi moi ket thuc tro choi
-                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
                 mediaPlayer.stop();
                 App.getInstance().getStorage().resetPlaySession();
             }
@@ -192,7 +194,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.icon_person :
-                callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
+                callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT);
                 break;
             case R.id.iv_caseA :
                 handleClickQuestion(R.id.iv_caseA);
@@ -274,7 +276,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 }
                 break;
             case R.id.iv_stop:
-                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
                 App.getInstance().getStorage().resetPlaySession();
                 break;
             default:
@@ -496,6 +498,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
+                mPlayer.release();
+                mPlayer = null;
                 mp = MediaPlayer.create(getContext(), finalTrueAns);
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -506,19 +510,23 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    ivCaseA.setClickable(true);
-                                    ivCaseB.setClickable(true);
-                                    ivCaseC.setClickable(true);
-                                    ivCaseD.setClickable(true);
-                                    ivCaseA.setImageResource(R.drawable.ic_play_answer);
-                                    ivCaseB.setImageResource(R.drawable.ic_play_answer);
-                                    ivCaseC.setImageResource(R.drawable.ic_play_answer);
-                                    ivCaseD.setImageResource(R.drawable.ic_play_answer);
-                                    frameCaseA.setVisibility(View.VISIBLE);
-                                    frameCaseB.setVisibility(View.VISIBLE);
-                                    frameCaseC.setVisibility(View.VISIBLE);
-                                    frameCaseD.setVisibility(View.VISIBLE);
-                                    goToNextQuestion(++index);
+                                    if (index == 15) {
+                                        showAlertDialogWinner();
+                                    } else {
+                                        ivCaseA.setClickable(true);
+                                        ivCaseB.setClickable(true);
+                                        ivCaseC.setClickable(true);
+                                        ivCaseD.setClickable(true);
+                                        ivCaseA.setImageResource(R.drawable.ic_play_answer);
+                                        ivCaseB.setImageResource(R.drawable.ic_play_answer);
+                                        ivCaseC.setImageResource(R.drawable.ic_play_answer);
+                                        ivCaseD.setImageResource(R.drawable.ic_play_answer);
+                                        frameCaseA.setVisibility(View.VISIBLE);
+                                        frameCaseB.setVisibility(View.VISIBLE);
+                                        frameCaseC.setVisibility(View.VISIBLE);
+                                        frameCaseD.setVisibility(View.VISIBLE);
+                                        goToNextQuestion(++index);
+                                    }
                                 }
                             },2500);
                         } else {
@@ -526,7 +534,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT,null);
+                                    callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
                                     mediaPlayer.stop();
                                     App.getInstance().getStorage().resetPlaySession();
                                 }
@@ -535,6 +543,37 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         }
                     }
                 });
+            }
+        });
+    }
+
+    private void showAlertDialogWinner() {
+        index = 1;
+        App.getInstance().getStorage().resetPlaySession();
+        if(mPlayer == null){
+            mPlayer = MediaPlayer.create(getContext(), R.raw.best_player);
+        }
+        mPlayer.start();
+        mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mPlayer.release();
+                mPlayer = null;
+                // Tạo AlertDialog
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setTitle("Chúc mừng")
+                        .setMessage("Xin chúc mừng bạn chính là triệu phú")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("Hủy", null)
+                        .create();
+
+                alertDialog.show();
             }
         });
     }
@@ -557,39 +596,22 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void goToNextQuestion(int level) {
-        if (level == 16) {
-            index = 1;
-            App.getInstance().getStorage().setCurrentLevel(0);
-            if(mPlayer == null){
-                mPlayer = MediaPlayer.create(getContext(), R.raw.best_player);
+        QuestionManager.getInstance().getQuestionByLevel(level, new QuestionManager.OnResultCallBack() {
+            @Override
+            public void callBack(Object data) {
+                getActivity().runOnUiThread(() -> {
+                    if (level == 6 || level == 11) {
+                        App.getInstance().getStorage().setCurrentLevel(level);
+                        callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT);
+                    } else {
+                        initDataQuestion(data);
+                        setTextForQuestion(level);
+                        // Minh: bat dau cau hoi moi thi start lai timer
+                        countDownQuestion();
+                    }
+                });
             }
-            mPlayer.start();
-            mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-                @Override
-                public void onCompletion(MediaPlayer mp) {
-                     mPlayer.release();
-                     mPlayer = null;
-                }
-            });
-        } else {
-            QuestionManager.getInstance().getQuestionByLevel(level, new QuestionManager.OnResultCallBack() {
-                @Override
-                public void callBack(Object data) {
-
-                    getActivity().runOnUiThread(() -> {
-                        if (level == 6 || level == 11) {
-                            App.getInstance().getStorage().setCurrentLevel(level);
-                            callBack.onCallBack(KEY_SHOW_QUESTION_FRAGMENT,null);
-                        } else {
-                            initDataQuestion(data);
-                            setTextForQuestion(level);
-                            // Minh: bat dau cau hoi moi thi start lai timer
-                            countDownQuestion();
-                        }
-                    });
-                }
-            });
-        }
+        });
     }
 
     private void setTextForQuestion(int id) {

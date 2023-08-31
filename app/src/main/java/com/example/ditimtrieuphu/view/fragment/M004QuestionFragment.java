@@ -37,10 +37,16 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
             recyclerView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    int index = 0;
+                    if (App.getInstance().getStorage().getCurrentLevel() == 6) {
+                        index = 10;
+                    } else {
+                        index = 5;
+                    }
                     FrameLayout frameLayout = recyclerView.getLayoutManager().
-                            findViewByPosition(10).findViewById(R.id.background_question);
+                            findViewByPosition(index).findViewById(R.id.background_question);
                     frameLayout.setVisibility(View.VISIBLE);
-                    list.get(10).setState(true);
+                    list.get(index).setState(true);
                 }
             }, 2000);
             playLevelMusic();
@@ -127,14 +133,24 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     private void playLevelMusic() {
+        int sourcePlay = 0;
+        int nextPlay = 0;
+        if (App.getInstance().getStorage().getCurrentLevel() == 6) {
+            sourcePlay = R.raw.chuc_mung_vuot_moc_01_0;
+            nextPlay = R.raw.ques6;
+        } else {
+            sourcePlay = R.raw.chuc_mung_vuot_moc_02_0;
+            nextPlay = R.raw.ques11;
+        }
         if(mediaLevelPlayer == null){
-            mediaLevelPlayer = MediaPlayer.create(getContext(), R.raw.chuc_mung_vuot_moc_01_0);
+            mediaLevelPlayer = MediaPlayer.create(getContext(), sourcePlay);
         }
         mediaLevelPlayer.start();
+        int finalNextPlay = nextPlay;
         mediaLevelPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
-                mp = MediaPlayer.create(getContext(), R.raw.ques6);
+                mp = MediaPlayer.create(getContext(), finalNextPlay);
                 mp.start();
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
