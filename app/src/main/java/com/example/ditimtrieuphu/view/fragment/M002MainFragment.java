@@ -1,14 +1,13 @@
 package com.example.ditimtrieuphu.view.fragment;
 
 
-import android.content.Intent;
-import android.media.MediaPlayer;
+import static com.example.ditimtrieuphu.view.fragment.HighScoreFragment.KEY_SHOW_HIGH_SCORE_FRAGMENT;
+
 import android.view.View;
 import android.widget.ImageView;
 
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
-import com.example.ditimtrieuphu.view.act.HighScoreActivity;
 import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
@@ -85,8 +84,8 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private  void showHighScore() {
-        Intent intent = new Intent(getActivity(), HighScoreActivity.class);
-        startActivity(intent);
+        // Minh: sua goi open fragment highscore
+        callBack.onCallBack(KEY_SHOW_HIGH_SCORE_FRAGMENT,null);
     }
 
     private void OnOrOffMusic() {

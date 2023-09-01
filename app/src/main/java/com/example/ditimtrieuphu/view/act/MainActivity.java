@@ -1,7 +1,10 @@
 package com.example.ditimtrieuphu.view.act;
 
+import static com.example.ditimtrieuphu.view.fragment.HighScoreFragment.KEY_SHOW_HIGH_SCORE_FRAGMENT;
+
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.view.fragment.HighScoreFragment;
 import com.example.ditimtrieuphu.view.fragment.M001SplashFragment;
 import com.example.ditimtrieuphu.view.fragment.M002MainFragment;
 import com.example.ditimtrieuphu.view.fragment.M003PlayFragment;
@@ -48,6 +51,13 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
                 playFragment.setCallBack(this);
                 showFragment(R.id.container_view, playFragment, false);
                 break;
+            // Minh: them dieu huong den high score frag
+            case KEY_SHOW_HIGH_SCORE_FRAGMENT: {
+                HighScoreFragment highScoreFragment = new HighScoreFragment();
+                highScoreFragment.setCallBack(this);
+                showFragment(R.id.container_view, highScoreFragment, false);
+                break;
+            }
         }
     }
 }
