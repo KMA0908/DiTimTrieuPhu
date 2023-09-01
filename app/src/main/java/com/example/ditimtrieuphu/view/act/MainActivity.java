@@ -34,6 +34,7 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
             case M003PlayFragment.KEY_SHOW_MAIN_FRAGMENT:
                 M002MainFragment mainFragment = new M002MainFragment();
                 mainFragment.setCallBack(this);
+                mainFragment.setBackgroundService(mService);
                 showFragment(R.id.container_view, mainFragment, false);
                 break;
             case M002MainFragment.KEY_SHOW_PLAY_FRAGMENT:
