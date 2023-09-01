@@ -3,6 +3,7 @@ package com.example.ditimtrieuphu.view.fragment;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -70,7 +71,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     public void onStart() {
         super.onStart();
         // Minh: sua dung service de phat nhac
-        if(!musicIsOn) {
+        if(musicIsOn) {
             mBackgroundService.startBackgroundMusic(R.raw.background_music, true);
         }
     }
