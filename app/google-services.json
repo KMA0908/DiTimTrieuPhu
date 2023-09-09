@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "559023564150",
+    "project_id": "ditimtrieuphu-bbd1e",
+    "storage_bucket": "ditimtrieuphu-bbd1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559023564150:android:7e04c1f261bc8cd5cec657",
+        "android_client_info": {
+          "package_name": "com.example.ditimtrieuphu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBz9X_VgUahvgYIYiatxuWoD483FxZNvzk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
