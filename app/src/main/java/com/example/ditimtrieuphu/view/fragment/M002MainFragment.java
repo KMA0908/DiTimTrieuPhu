@@ -1,9 +1,8 @@
 package com.example.ditimtrieuphu.view.fragment;
 
 
-import android.content.Intent;
-import android.media.MediaPlayer;
-import android.util.Log;
+import static com.example.ditimtrieuphu.view.fragment.HighScoreFragment.KEY_SHOW_HIGH_SCORE_FRAGMENT;
+
 import android.view.View;
 import android.widget.ImageView;
 
@@ -40,7 +39,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
             if (musicIsOn) {
                 ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound));
             } else {
-                ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound));
+                ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound_off));
             }
         }
     }
@@ -90,7 +89,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void OnOrOffMusic() {
-        if(musicIsOn == true) {
+        if(musicIsOn) {
             ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound_off));
             musicIsOn = false;
             // Minh: sua dung service phat nhac
