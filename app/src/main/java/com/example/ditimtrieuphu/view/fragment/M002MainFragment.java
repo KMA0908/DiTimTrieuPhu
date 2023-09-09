@@ -75,7 +75,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     }
 
     private void showPlayFragment() {
-        callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT,null);
+        callBack.onCallBack(KEY_SHOW_PLAY_FRAGMENT);
     }
 
     private void showTutorial() {

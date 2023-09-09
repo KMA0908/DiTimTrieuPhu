@@ -30,6 +30,6 @@ public class M001SplashFragment extends BaseFragment<SplashViewModel> {
     }
 
     private void gotoMainFragment() {
-        mCallBack.onCallBack(KEY_SHOW_HOME_FRAGMENT, null);
+        mCallBack.onCallBack(KEY_SHOW_HOME_FRAGMENT);
     }
 }

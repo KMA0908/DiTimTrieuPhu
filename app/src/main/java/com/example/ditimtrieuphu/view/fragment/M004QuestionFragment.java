@@ -68,7 +68,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
     }
 
     private void showPlayFragment() {
-        callBack.onCallBack(KEY_SHOW_QUESTION_DETAIL,null);
+        callBack.onCallBack(KEY_SHOW_QUESTION_DETAIL);
     }
 
     @Override
