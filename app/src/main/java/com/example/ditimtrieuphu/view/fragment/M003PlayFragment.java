@@ -33,6 +33,7 @@ import java.util.Random;
 public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     public static final String KEY_SHOW_QUESTION_FRAGMENT = "KEY_SHOW_QUESTION_FRAGMENT";
     public static final String KEY_SHOW_MAIN_FRAGMENT = "KEY_SHOW_MAIN_FRAGMENT";
+    private static final long TIME_PER_QUESTION = 30000; // Minh: thoi gian choi mac dinh mot cau hoi 30s
     private OnActionCallBack callBack;
     private ProgressBar progressBar;
 
@@ -47,6 +48,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
     private List<FrameLayout> frameCaseList ;
 
     private CountDownTimer countDownTimer; // Minh: de countDownTimer lam global
+    private long mSecondsLeft; // Minh: thoi gian con lai tren timer
 
     @Override
     protected void initViews() {
@@ -74,7 +76,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         ivCallHelp = findViewById(R.id.iv_call_help, this);
         findViewById(R.id.icon_person, this);
         findViewById(R.id.iv_stop, this);
-        countDownQuestion();
+        countDownQuestion(TIME_PER_QUESTION);
         AppDatabase database =  Room.databaseBuilder(getActivity(),
                         AppDatabase.class, "databases/Question.db")
                 .allowMainThreadQueries()
@@ -96,13 +98,13 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         });
     }
 
-    private void countDownQuestion() {
-       countDownTimer = new CountDownTimer(30000, 1000) {
+    private void countDownQuestion(long time) {
+       countDownTimer = new CountDownTimer(time, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                progressBar.setProgress((int) (30000 - millisUntilFinished));
-                long secondsLeft = millisUntilFinished / 1000;
-                timerTextView.setText(String.valueOf(secondsLeft));
+                progressBar.setProgress((int) (time - millisUntilFinished));
+                mSecondsLeft = millisUntilFinished;
+                timerTextView.setText(String.valueOf(mSecondsLeft/1000));
             }
 
             @Override
@@ -195,6 +197,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_help_50_50 :
                 if (!App.getInstance().getStorage().isState50()) {
+                    // Minh: dung su tro giup pause timer cho den khi dung xong
+                    countDownTimer.cancel();
                     resetMedia();
                     addCaseFailHelp50(trueCase);
                     playHelp50Music();
@@ -214,6 +218,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                                     frameCaseList.get(randomIndex).setVisibility(View.GONE);
                                 }
                             }
+                            // Minh: thuc hien xong su tro giup resume timer
+                            countDownQuestion(mSecondsLeft);
                         }
                     },5000);
                 } else {
@@ -222,6 +228,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_change_question_help:
                 if (!App.getInstance().getStorage().isStateChange()) {
+                    // Minh: dung su tro giup pause timer cho den khi dung xong
+                    countDownTimer.cancel();
                     ivChangeQuestion.setClickable(false);
                     App.getInstance().getStorage().setStateChange(true);
                     ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
@@ -231,6 +239,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
                             getActivity().runOnUiThread(() -> {
                                 initDataQuestion(data);
+                                // Minh: thuc hien xong su tro giup resume timer
+                                countDownQuestion(mSecondsLeft);
                             });
                         }
                     });
@@ -240,6 +250,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_audience_help:
                 if (!App.getInstance().getStorage().isStateAudi()) {
+                    // Minh: dung su tro giup pause timer cho den khi dung xong
+                    countDownTimer.cancel();
                     resetMedia();
                     ivAudienceHelp.setClickable(false);
                     ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
@@ -251,6 +263,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 break;
             case R.id.iv_call_help:
                 if (!App.getInstance().getStorage().isStateCall()) {
+                    // Minh: dung su tro giup pause timer cho den khi dung xong
+                    countDownTimer.cancel();
                     resetMedia();
                     ivCallHelp.setClickable(false);
                     ivCallHelp.setImageResource(R.drawable.ic_phone_done);
@@ -287,6 +301,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                     public void onCompletion(MediaPlayer mp) {
                         mp.release();
                         helpCallDialog.dismiss();
+                        // Minh: thuc hien xong su tro giup resume timer
+                        countDownQuestion(mSecondsLeft);
                     }
                 });
             }
@@ -311,6 +327,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         mp.release();
                         BarChartQuestion barChartQuestion = new BarChartQuestion();
                         barChartQuestion.show(getActivity().getSupportFragmentManager(),BarChartQuestion.TAG);
+                        // Minh: thuc hien xong su tro giup resume timer
+                        countDownQuestion(mSecondsLeft);
                     }
                 });
             }
@@ -591,7 +609,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                         initDataQuestion(data);
                         setTextForQuestion(level);
                         // Minh: bat dau cau hoi moi thi start lai timer
-                        countDownQuestion();
+                        countDownQuestion(TIME_PER_QUESTION);
                     }
                 });
             }
