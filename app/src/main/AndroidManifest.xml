@@ -9,7 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DiTimTrieuPhu">
-        <activity android:name=".view.act.HighScoreActivity">
+        <activity android:name=".view.fragment.HighScoreFragment">
         </activity>
         <activity android:name=".view.act.MainActivity"
             android:exported="true">
@@ -19,6 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Minh: them service -->
+        <service android:name=".BackgroundService"/>
     </application>
 
 </manifest>
