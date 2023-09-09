@@ -58,18 +58,29 @@
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:layout_marginLeft="15dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="3dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_coin" />
-
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center">
             <TextView
-                android:id="@+id/monney"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" $200.000"
+                android:text="$ "
                 android:textColor="@color/white"
-                android:textSize="17dp" />
+                android:textSize="16sp" />
+            <TextView
+                android:id="@+id/tv_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200.000"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+            </TableRow>
         </LinearLayout>
     </LinearLayout>
 
@@ -170,15 +181,26 @@
             android:paddingHorizontal="30dp"
             android:src="@drawable/ic_play_answer" />
 
-        <TextView
-            android:id="@+id/tv_caseA"
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="A. Lạnh"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
+            android:layout_gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="A. "
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/tv_caseA"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lạnh"
+                android:textColor="@color/white"
+                android:textSize="15dp" />
+        </TableRow>
+
     </FrameLayout>
 
     <FrameLayout
@@ -192,16 +214,25 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
             android:src="@drawable/ic_play_answer" />
-
-        <TextView
-            android:id="@+id/tv_caseB"
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="B. Trống"
+            android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="B. "
             android:textColor="@color/white"
             android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_caseB"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trống"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+        </TableRow>
     </FrameLayout>
 
     <FrameLayout
@@ -215,16 +246,25 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
             android:src="@drawable/ic_play_answer" />
-
-        <TextView
-            android:id="@+id/tv_caseC"
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="C. Quạnh"
+            android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C. "
             android:textColor="@color/white"
             android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_caseC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quạnh"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+        </TableRow>
     </FrameLayout>
 
     <FrameLayout
@@ -238,16 +278,25 @@
             android:layout_height="wrap_content"
             android:paddingHorizontal="30dp"
             android:src="@drawable/ic_play_answer" />
-
-        <TextView
-            android:id="@+id/tv_caseD"
+        <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            android:text="D. Xấu"
+            android:layout_gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="D. "
             android:textColor="@color/white"
             android:textSize="15dp" />
+        <TextView
+            android:id="@+id/tv_caseD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xấu"
+            android:textColor="@color/white"
+            android:textSize="15dp" />
+        </TableRow>
     </FrameLayout>
 
 </LinearLayout>

@@ -39,7 +39,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     private TextView timerTextView;
 
-    private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion;
+    private TextView tvQuestion,tvCaseA,tvCaseB,tvCaseC,tvCaseD, tvIndexQuestion, tvMoney;
     private ImageView ivCaseA,ivCaseB,ivCaseC,ivCaseD,ivHelp50,ivChangeQuestion,ivAudienceHelp,ivCallHelp;
     private FrameLayout frameCaseA,frameCaseB,frameCaseC,frameCaseD;
     private MediaPlayer mPlayer;
@@ -56,6 +56,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         index = 1;
         tvIndexQuestion = findViewById(R.id.tv_index_question);
         tvQuestion = findViewById(R.id.question);
+        tvMoney = findViewById(R.id.tv_money);
         progressBar = findViewById(R.id.timeQuestion);
         tvCaseA = findViewById(R.id.tv_caseA);
         tvCaseB = findViewById(R.id.tv_caseB);
@@ -616,69 +617,86 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         });
     }
 
+    @SuppressLint("SetTextI18n")
     private void setTextForQuestion(int id) {
         switch (id) {
             case 1 : {
                 tvIndexQuestion.setText("Câu 1");
+                tvMoney.setText("200.000");
                 break;
             }
             case 2 : {
                 tvIndexQuestion.setText("Câu 2");
+                tvMoney.setText("400.000");
                 break;
             }
             case 3 : {
                 tvIndexQuestion.setText("Câu 3");
+                tvMoney.setText("600.000");
                 break;
             }
             case 4 : {
                 tvIndexQuestion.setText("Câu 4");
+                tvMoney.setText("1.000.000");
                 break;
             }
             case 5 : {
                 tvIndexQuestion.setText("Câu 5");
+                tvMoney.setText("2.000.000");
                 break;
             }
             case 6 : {
                 tvIndexQuestion.setText("Câu 6");
+                tvMoney.setText("3.000.000");
                 break;
             }
             case 7 : {
                 tvIndexQuestion.setText("Câu 7");
+                tvMoney.setText("6.000.000");
                 break;
             }
             case 8 : {
                 tvIndexQuestion.setText("Câu 8");
+                tvMoney.setText("10.000.000");
                 break;
             }
             case 9 : {
                 tvIndexQuestion.setText("Câu 9");
+                tvMoney.setText("14.000.000");
                 break;
             }
             case 10 : {
                 tvIndexQuestion.setText("Câu 10");
+                tvMoney.setText("22.000.000");
                 break;
             } case 11 : {
                 tvIndexQuestion.setText("Câu 11");
+                tvMoney.setText("30.000.000");
                 break;
             }
             case 12 : {
                 tvIndexQuestion.setText("Câu 12");
+                tvMoney.setText("40.000.000");
                 break;
             }
             case 13 : {
                 tvIndexQuestion.setText("Câu 13");
+                tvMoney.setText("60.000.000");
                 break;
             }
             case 14: {
                 tvIndexQuestion.setText("Câu 14");
+                tvMoney.setText("85.000.000");
                 break;
             }
             case 15 : {
                 tvIndexQuestion.setText("Câu 15");
+                tvMoney.setText("150.000.000");
                 break;
             }
             default: {
                 tvIndexQuestion.setText("Câu 1");
+                tvMoney.setText("200.000");
                 break;
             }
         }
