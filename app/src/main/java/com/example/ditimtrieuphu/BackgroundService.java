@@ -32,8 +32,15 @@ public class BackgroundService extends Service {
      * @param looping: loop nhac hay khong
      */
     public void startBackgroundMusic(int soundId, boolean looping) {
+        freezeMusicBackground();
         setBackgroundMusic(soundId, looping);
         startBackgroundMusic();
+    }
+
+    private void freezeMusicBackground() {
+        mBackgroundMediaPlayer.stop();
+        mBackgroundMediaPlayer.release();
+        mBackgroundMediaPlayer = null;
     }
 
     /**
