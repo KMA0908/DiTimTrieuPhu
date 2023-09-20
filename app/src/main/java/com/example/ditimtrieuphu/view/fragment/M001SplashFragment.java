@@ -1,5 +1,7 @@
 package com.example.ditimtrieuphu.view.fragment;
 
+import static com.example.ditimtrieuphu.view.fragment.LoginFragment.KEY_SHOW_LOGIN_FRAGMENT;
+
 import android.os.Handler;
 
 import com.example.ditimtrieuphu.OnActionCallBack;
@@ -30,6 +32,7 @@ public class M001SplashFragment extends BaseFragment<SplashViewModel> {
     }
 
     private void gotoMainFragment() {
-        mCallBack.onCallBack(KEY_SHOW_HOME_FRAGMENT);
+        // Minh: sua navigate den login screen thay vi main nhu truoc
+        mCallBack.onCallBack(KEY_SHOW_LOGIN_FRAGMENT);
     }
 }
