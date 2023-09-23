@@ -3,6 +3,11 @@
 
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="hint_acc">Tài khoản</string>
+    <string name="hint_pass">Mật khẩu</string>
+    <string name="sign_up_text"><u>Bạn chưa có tài khoản? Đăng ký.</u></string>
+    <string name="hint_password_confirm">Nhập lại mật khẩu</string>
+    <string name="close">Đóng</string>
 
     <dimen name="text_size_question">22sp</dimen>
 
