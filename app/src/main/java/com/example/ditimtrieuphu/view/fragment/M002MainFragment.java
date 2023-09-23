@@ -1,14 +1,21 @@
 package com.example.ditimtrieuphu.view.fragment;
 
 
+import static com.example.ditimtrieuphu.view.dialog.SimpleMessageDialog.TAG_DIALOG_MESSAGE;
+import static com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog.TAG_DIALOG_BLUR;
 import static com.example.ditimtrieuphu.view.fragment.HighScoreFragment.KEY_SHOW_HIGH_SCORE_FRAGMENT;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.view.dialog.ChangeUserNameDialog;
 import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
+import com.example.ditimtrieuphu.view.dialog.SimpleMessageDialog;
+import com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
 public class M002MainFragment extends BaseFragment<MainFragViewModel> {
@@ -21,6 +28,9 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     private ImageView ivTutorial;
     private ImageView ivMusic;
     private ImageView ivHighScore;
+    private ImageView mAvatarImageView;
+    private TextView mPlayerNameTextView;
+    private TextView mPlayerLevelTextView;
 
     public boolean musicIsOn = true;
 
@@ -32,6 +42,11 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
          ivTutorial=findViewById(R.id.iv_info, this);
          ivMusic=findViewById(R.id.iv_music, this);
          ivHighScore=findViewById(R.id.iv_highScore, this);
+         // Minh: them phan hien thi ten va avatar - start
+        mAvatarImageView = findViewById(R.id.iv_person, this);
+        mPlayerNameTextView = findViewById(R.id.tv_player_name);
+        mPlayerLevelTextView = findViewById(R.id.tv_player_level);
+        // Minh: them phan hien thi ten va avatar - end.
 
          // Minh: sua dung service choi bg music
         if (mBackgroundService != null) {
@@ -41,6 +56,40 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
             } else {
                 ivMusic.setImageDrawable(getActivity().getDrawable(R.drawable.ic_sound_off));
             }
+        }
+
+        mModel.getUserNameLiveData().observe(this, s -> {
+            mPlayerNameTextView.setText(s);
+        });
+        //TODO khi vao main can check display name cua user co chua, neu chua co can yeu cau nguoi choi dat ten
+        if (TextUtils.isEmpty(mModel.getUserNameLiveData().getValue())) {
+            final ChangeUserNameDialog dialog = new ChangeUserNameDialog();
+            dialog.setButtonCallBack(objects -> {
+                if (objects != null && objects.length > 0) {
+                    String userName = (String) objects[0];
+                    if (TextUtils.isEmpty(userName)) {
+                        return;
+                    }
+                    // show blur
+                    final WaitingLoadingBlurDialog blurDialog = new WaitingLoadingBlurDialog();
+                    blurDialog.show(getParentFragmentManager(), TAG_DIALOG_BLUR);
+
+                    mModel.updateUserDisplayName(userName, objects1 -> {
+                        dialog.dismiss();
+                        blurDialog.dismiss();
+                    }, objects1 -> {
+                        // dang nhap fail hien dialog
+                        blurDialog.dismiss();
+                        if (objects1 != null && objects1.length > 0) {
+                            String message = (String) objects[0];
+                            SimpleMessageDialog simpleMessageDialog = new SimpleMessageDialog();
+                            simpleMessageDialog.setDialogMessage(message);
+                            simpleMessageDialog.show(getParentFragmentManager(), TAG_DIALOG_MESSAGE);
+                        }
+                    });
+                }
+            });
+            dialog.show(getParentFragmentManager(), ChangeUserNameDialog.TAG_DIALOG_CHANGE_USER_NAME);
         }
     }
 

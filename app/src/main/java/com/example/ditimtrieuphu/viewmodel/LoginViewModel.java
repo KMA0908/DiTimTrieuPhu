@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ditimtrieuphu.Executable;
+import com.example.ditimtrieuphu.session.UserManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -19,10 +20,10 @@ import java.util.function.Function;
  * Minh: them login view model
  */
 public class LoginViewModel extends ViewModel {
-    private FirebaseAuth mAuth;
+    private UserManager mUserManager;
 
     public LoginViewModel() {
-        mAuth = FirebaseAuth.getInstance();
+       mUserManager = UserManager.getInstance();
     }
 
     /**
@@ -31,19 +32,13 @@ public class LoginViewModel extends ViewModel {
      * @param password
      */
     public void createAccount(String email, String password, Executable successExe, Executable failedExe) {
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            successExe.execute();
-                        } else {
-                            failedExe.execute(task.getException().getMessage());
-                            task.getException().printStackTrace();
-                        }
-                    }
-                });
+        mUserManager.createAccountWithEmailoAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                successExe.execute();
+            } else {
+                failedExe.execute(task.getException().getMessage());
+            }
+        });
     }
 
     /**
@@ -54,16 +49,16 @@ public class LoginViewModel extends ViewModel {
      * @param failedExe ham thuc hien neu that bai
      */
     public void loginWithAccountAndPassword(String account, String password, Executable successExe, Executable failedExe) {
-        mAuth.signInWithEmailAndPassword(account, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            successExe.execute();
-                        } else {
-                            failedExe.execute(task.getException().getMessage());
-                        }
-                    }
-                });
+        mUserManager.loginWithAccountAndPassword(account, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                successExe.execute();
+            } else {
+                failedExe.execute(task.getException().getMessage());
+            }
+        });
+    }
+
+    public boolean isUserSignedIn() {
+        return mUserManager.userAvailable();
     }
 }

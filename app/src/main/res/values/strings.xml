@@ -8,6 +8,10 @@
     <string name="sign_up_text"><u>Bạn chưa có tài khoản? Đăng ký.</u></string>
     <string name="hint_password_confirm">Nhập lại mật khẩu</string>
     <string name="close">Đóng</string>
+    <string name="default_player_name">Default Player Name</string>
+    <string name="default_player_level">Default Player Level</string>
+    <string name="title_rename_dialog">Chúng tôi nên gọi bạn là gì?</string>
+    <string name="confirm">Xác nhận</string>
 
     <dimen name="text_size_question">22sp</dimen>
 
