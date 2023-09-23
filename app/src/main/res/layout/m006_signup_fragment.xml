@@ -11,6 +11,14 @@
         android:id="@+id/iv_back"
         android:layout_margin="16dp"/>
 
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/et_account"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_logo" />
     <EditText
         android:id="@+id/et_account"
         android:layout_width="match_parent"
@@ -57,7 +65,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password_confirm"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="16dp"
         android:background="@drawable/button_bg"
         android:text="Đăng ký"
         android:textColor="@color/white" />

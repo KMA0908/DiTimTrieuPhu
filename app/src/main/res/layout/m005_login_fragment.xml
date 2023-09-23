@@ -4,6 +4,15 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_splash">
 
+    <ImageView
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_above="@+id/et_account"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_logo" />
+
     <EditText
         android:id="@+id/et_account"
         android:layout_width="match_parent"
@@ -11,12 +20,12 @@
         android:layout_centerInParent="true"
         android:layout_gravity="center"
         android:layout_marginHorizontal="32dp"
+        android:autofillHints=""
         android:background="@drawable/edit_text_bg"
         android:hint="@string/hint_acc"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="16dp"
-        android:paddingVertical="8dp"
-        android:autofillHints="" />
+        android:paddingVertical="8dp" />
 
     <EditText
         android:id="@+id/et_password"
@@ -39,7 +48,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/et_password"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="16dp"
         android:background="@drawable/button_bg"
         android:text="Đăng nhập"
         android:textColor="@color/white" />
