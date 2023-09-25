@@ -1,8 +1,10 @@
-package com.example.ditimtrieuphu;
+package com.example.ditimtrieuphu.common;
 
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.ditimtrieuphu.App;
 
 public class CommonUtils {
     private static final String FILE_NAME = "file_shared";
@@ -19,7 +21,7 @@ public class CommonUtils {
     }
 
     public boolean isExistPref(String key) {
-        SharedPreferences pref=App.getInstance().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+        SharedPreferences pref= App.getInstance().getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         return pref.contains(key);
     }
 

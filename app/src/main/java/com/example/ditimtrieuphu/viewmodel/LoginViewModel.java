@@ -34,7 +34,9 @@ public class LoginViewModel extends ViewModel {
     public void createAccount(String email, String password, Executable successExe, Executable failedExe) {
         mUserManager.createAccountWithEmailoAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                successExe.execute();
+                if (successExe != null) {
+                    successExe.execute();
+                }
             } else {
                 failedExe.execute(task.getException().getMessage());
             }

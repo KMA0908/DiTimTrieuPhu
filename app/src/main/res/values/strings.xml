@@ -9,12 +9,12 @@
     <string name="hint_password_confirm">Nhập lại mật khẩu</string>
     <string name="close">Đóng</string>
     <string name="default_player_name">Default Player Name</string>
-    <string name="default_player_level">Default Player Level</string>
+    <string name="default_player_level">LV. %d</string>
     <string name="title_rename_dialog">Chúng tôi nên gọi bạn là gì?</string>
     <string name="confirm">Xác nhận</string>
-
-    <dimen name="text_size_question">22sp</dimen>
-
-    <dimen name="margi_top_question">8dp</dimen>
+    <string name="setting">Cài đặt</string>
+    <string name="bg_music_setting">Nhạc nền</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="stamina">%d/%d</string>
 
 </resources>

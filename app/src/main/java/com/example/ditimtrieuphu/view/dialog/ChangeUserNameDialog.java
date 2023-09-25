@@ -1,5 +1,6 @@
 package com.example.ditimtrieuphu.view.dialog;
 
+import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -25,16 +26,22 @@ public class ChangeUserNameDialog extends DialogFragment {
     private AppCompatButton mConfirmButton;
     private Executable mButtonCallBack;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.getWindow().setLayout(500, ViewGroup.LayoutParams.WRAP_CONTENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            dialog.setCanceledOnTouchOutside(false);
+        }
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        getDialog().setCanceledOnTouchOutside(false);
-        WindowManager.LayoutParams params = getDialog().getWindow().getAttributes();
-        params.height = 200;
-        getDialog().getWindow().setAttributes(params);
-
+        
         return inflater.inflate(R.layout.dialog_change_user_name, container, false);
     }
 
