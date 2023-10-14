@@ -68,6 +68,9 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
             }
             // Minh: them case hien thi login fragment
             case LoginFragment.KEY_SHOW_LOGIN_FRAGMENT: {
+                // Minh - start:
+                dismissBlurDialog();
+                // Minh - end.
                 LoginFragment loginFragment = new LoginFragment();
                 loginFragment.setCallBack(this);
                 showFragment(R.id.container_view, loginFragment, false);

@@ -5,6 +5,7 @@ import static com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog.TAG
 import static com.example.ditimtrieuphu.view.fragment.SignUpFragment.KEY_SHOW_SIGNUP_FRAGMENT;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,8 +30,12 @@ public class LoginFragment extends BaseFragment<LoginViewModel> {
 
     @Override
     protected void initViews() {
-        //TODO ve sau can check user da dang nhap tu phien dang nhap truoc hay chua thi can login user vao main luon
+        //Check user da dang nhap tu phien dang nhap truoc hay chua thi can login user vao main luon
         //khong hien thi dang nhap nua, va can refresh token khi het han de luon giu user dang nhap.
+        if (mModel.isUserSignedIn()) {
+            mCallBack.onCallBack(M001SplashFragment.KEY_SHOW_HOME_FRAGMENT);
+        }
+
         mSignUpTextView = findViewById(R.id.tv_sign_up, this);
         mAccountEditText = findViewById(R.id.et_account);
         mPasswordEditText = findViewById(R.id.et_password);

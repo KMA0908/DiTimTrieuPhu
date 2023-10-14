@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="dialog_width">350dp</dimen>
+    <dimen name="settings_dialog_width">300dp</dimen>
+    <dimen name="text_size_question">22sp</dimen>
+    <dimen name="margi_top_question">8dp</dimen>
 </resources>
