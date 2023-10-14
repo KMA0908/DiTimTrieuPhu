@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ditimtrieuphu.App;
 import com.example.ditimtrieuphu.BackgroundService;
+import com.example.ditimtrieuphu.ContextAccessable;
 import com.example.ditimtrieuphu.Storage;
 
 
@@ -35,7 +36,12 @@ public abstract class BaseFragment<T extends ViewModel> extends Fragment impleme
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(getLayoutId(), container, false);
-        mModel = new ViewModelProvider(this).get(getClassViewModel());
+        // Minh: sua lai owner la activity thay vi tung frag rieng de dung chung lai viewmodel giua cac fragment can logic chung
+        mModel = new ViewModelProvider(requireActivity()).get(getClassViewModel());
+        // Minh: neu view model can access context thi set
+        if (mModel instanceof ContextAccessable) {
+            ((ContextAccessable) mModel).setContext(mContext);
+        }
         initViews();
         return rootView;
     }

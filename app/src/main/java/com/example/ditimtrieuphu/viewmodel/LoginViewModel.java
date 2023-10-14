@@ -1,29 +1,21 @@
 package com.example.ditimtrieuphu.viewmodel;
 
-import android.util.Log;
+import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ditimtrieuphu.ContextAccessable;
 import com.example.ditimtrieuphu.Executable;
-import com.example.ditimtrieuphu.session.UserManager;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.function.Function;
+import com.example.ditimtrieuphu.session.UserSessionManager;
 
 /**
  * Minh: them login view model
  */
-public class LoginViewModel extends ViewModel {
-    private UserManager mUserManager;
+public class LoginViewModel extends ViewModel implements ContextAccessable {
+    private UserSessionManager mUserSessionManager;
 
     public LoginViewModel() {
-       mUserManager = UserManager.getInstance();
+
     }
 
     /**
@@ -32,7 +24,7 @@ public class LoginViewModel extends ViewModel {
      * @param password
      */
     public void createAccount(String email, String password, Executable successExe, Executable failedExe) {
-        mUserManager.createAccountWithEmailoAndPassword(email, password).addOnCompleteListener(task -> {
+        mUserSessionManager.createAccountWithEmailoAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (successExe != null) {
                     successExe.execute();
@@ -51,7 +43,7 @@ public class LoginViewModel extends ViewModel {
      * @param failedExe ham thuc hien neu that bai
      */
     public void loginWithAccountAndPassword(String account, String password, Executable successExe, Executable failedExe) {
-        mUserManager.loginWithAccountAndPassword(account, password).addOnCompleteListener(task -> {
+        mUserSessionManager.loginWithAccountAndPassword(account, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 successExe.execute();
             } else {
@@ -61,6 +53,15 @@ public class LoginViewModel extends ViewModel {
     }
 
     public boolean isUserSignedIn() {
-        return mUserManager.userAvailable();
+        return mUserSessionManager.userAvailable();
+    }
+
+    @Override
+    public void setContext(Context context) {
+        mUserSessionManager = UserSessionManager.getInstance(context);
+    }
+
+    public void syncGameResources(Executable success, Executable fail) {
+        mUserSessionManager.syncGameResources(success, fail);
     }
 }
