@@ -73,6 +73,10 @@ public class BackgroundService extends Service {
      * Set file mp3 cho nhac nen
      */
     private void setBackgroundMusic(int soundId, boolean looping) {
+        // Minh: dung phat nhac hien tai de create nhac moi khong bi chay song song nhac cu - start
+        mBackgroundMediaPlayer.stop();
+        mBackgroundMediaPlayer.release();
+        // Minh: end
         mBackgroundMediaPlayer = MediaPlayer.create(this, soundId);
         mBackgroundMediaPlayer.setLooping(looping);
     }
