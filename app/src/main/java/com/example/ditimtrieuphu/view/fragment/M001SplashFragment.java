@@ -18,7 +18,8 @@ public class M001SplashFragment extends BaseFragment<SplashViewModel> {
 
     @Override
     protected void initViews() {
-        new Handler().postDelayed(this::gotoMainFragment, 2000);
+        // fetch data resource tu firebase
+        mModel.syncGameResources(objects -> gotoMainFragment(), null);
     }
 
     @Override

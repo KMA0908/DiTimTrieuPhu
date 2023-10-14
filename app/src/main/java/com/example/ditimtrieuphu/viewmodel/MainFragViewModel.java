@@ -1,24 +1,28 @@
 package com.example.ditimtrieuphu.viewmodel;
 
-import androidx.lifecycle.LiveData;
+import android.content.Context;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.ditimtrieuphu.ContextAccessable;
 import com.example.ditimtrieuphu.Executable;
-import com.example.ditimtrieuphu.entity.PlayerInfo;
-import com.example.ditimtrieuphu.session.UserManager;
+import com.example.ditimtrieuphu.dto.PlayerInfo;
+import com.example.ditimtrieuphu.entity.Badge;
+import com.example.ditimtrieuphu.session.UserSessionManager;
 
-public class MainFragViewModel extends ViewModel {
-    private UserManager mUserManager;
-    private MutableLiveData<PlayerInfo> mPlayerInfoMutableLiveData;
+import java.util.List;
+
+public class MainFragViewModel extends ViewModel implements ContextAccessable {
+    private UserSessionManager mUserSessionManager;
+    private final MutableLiveData<PlayerInfo> mPlayerInfoMutableLiveData;
 
     public MainFragViewModel() {
-        mUserManager = UserManager.getInstance();
         mPlayerInfoMutableLiveData = new MutableLiveData<>();
     }
 
     public void logout(Executable success, Executable fail) {
-        mUserManager.logOut().addOnCompleteListener(task -> {
+        mUserSessionManager.logOut().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (success != null) {
                     success.execute();
@@ -32,9 +36,10 @@ public class MainFragViewModel extends ViewModel {
     }
 
     public void syncPlayerInfo(Executable success, Executable fail) {
-        mUserManager.syncPlayerInfo().addOnCompleteListener(task -> {
+        mUserSessionManager.syncPlayerInfo().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                mPlayerInfoMutableLiveData.setValue(mUserManager.getPlayerInfo());
+                mPlayerInfoMutableLiveData.setValue(mUserSessionManager.getPlayerInfo());
+                mUserSessionManager.syncOwnedBadges();
                 if (success != null) {
                     success.execute();
                 }
@@ -48,7 +53,7 @@ public class MainFragViewModel extends ViewModel {
 
     public void createDefaultPlayerInfo(String playerName, Executable success, Executable fail) {
         // Minh: neu thanh cong thi tao thong mac dinh cua player
-        mUserManager.createDefaultPlayerInfo(playerName).addOnCompleteListener(t -> {
+        mUserSessionManager.createDefaultPlayerInfo(playerName).addOnCompleteListener(t -> {
             if (t.isSuccessful()) {
                 success.execute();
             } else {
@@ -60,5 +65,14 @@ public class MainFragViewModel extends ViewModel {
     // Getter
     public MutableLiveData<PlayerInfo> getPlayerInfoMutableLiveData() {
         return mPlayerInfoMutableLiveData;
+    }
+
+    @Override
+    public void setContext(Context context) {
+        mUserSessionManager = UserSessionManager.getInstance(context);
+    }
+
+    public List<Badge> getOwnedBadges() {
+        return mUserSessionManager.getOwnedBadges();
     }
 }

@@ -61,7 +61,18 @@ public class LoginFragment extends BaseFragment<LoginViewModel> {
                 waitingLoadingBlurDialog.show(getParentFragmentManager(), TAG_DIALOG_BLUR);
                 mModel.loginWithAccountAndPassword(account, password, objects -> {
                     // Dang nhap thanh cong thi dua user vao main screen
-                    mCallBack.onCallBack(M001SplashFragment.KEY_SHOW_HOME_FRAGMENT);
+                    mModel.syncGameResources(o -> {
+                        mCallBack.onCallBack(M001SplashFragment.KEY_SHOW_HOME_FRAGMENT);
+                    }, o -> {
+                        waitingLoadingBlurDialog.dismiss();
+                        // dang nhap fail hien dialog
+                        if (o != null && o.length > 0) {
+                            String message = (String) o[0];
+                            SimpleMessageDialog simpleMessageDialog = new SimpleMessageDialog();
+                            simpleMessageDialog.setDialogMessage(message);
+                            simpleMessageDialog.show(getParentFragmentManager(), TAG_DIALOG_MESSAGE);
+                        }
+                    });
                 }, objects -> {
                     waitingLoadingBlurDialog.dismiss();
                     // dang nhap fail hien dialog

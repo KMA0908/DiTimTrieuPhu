@@ -1,4 +1,4 @@
-package com.example.ditimtrieuphu.entity;
+package com.example.ditimtrieuphu.dto;
 
 public class PlayerInfo {
     public static final String KEY_ID = "id";
@@ -6,6 +6,7 @@ public class PlayerInfo {
     public static final String KEY_STAMINA = "stamina";
     public static final String KEY_LEVEL_PROGRESS = "levelProgress";
     public static final String KEY_PROPERTY = "property";
+    public static final String KEY_ROCKET = "rocket";
     public static final String KEY_DISPLAY_NAME = "displayName";
     public static final String KEY_USER_ID = "userId";
 
@@ -14,21 +15,12 @@ public class PlayerInfo {
     private int stamina;
     private int levelProgress;
     private long property;
+    private int rocket;
     private String displayName;
     private String userId;
 
     public PlayerInfo() {
 
-    }
-
-    public PlayerInfo(String id, int level, int stamina, int levelProgress, long property, String displayName, String userId) {
-        this.id = id;
-        this.level = level;
-        this.stamina = stamina;
-        this.levelProgress = levelProgress;
-        this.property = property;
-        this.displayName = displayName;
-        this.userId = userId;
     }
 
     public String getId() {
@@ -59,6 +51,10 @@ public class PlayerInfo {
         return userId;
     }
 
+    public int getRocket() {
+        return rocket;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -77,6 +73,10 @@ public class PlayerInfo {
 
     public void setProperty(long property) {
         this.property = property;
+    }
+
+    public void setRocket(int rocket) {
+        this.rocket = rocket;
     }
 
     public void setDisplayName(String displayName) {

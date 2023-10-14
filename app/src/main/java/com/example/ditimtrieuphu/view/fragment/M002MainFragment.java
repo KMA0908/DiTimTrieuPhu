@@ -152,9 +152,9 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         if(v.getId()==R.id.iv_highScore){
             showHighScore();
         }
-        //TODO Su kien click vao avatar, navigate den frag trang ca nhan
+        // Su kien click vao avatar, navigate den frag trang ca nhan
         if (v.getId() == R.id.iv_person) {
-
+            callBack.onCallBack(PlayerProfileFragment.KEY_SHOW_PLAYER_PROFILE_FRAGMENT);
         }
     }
 
