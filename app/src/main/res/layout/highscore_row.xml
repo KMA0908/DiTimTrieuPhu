@@ -24,35 +24,63 @@
                 android:src="@drawable/ic_launcher_background"
                 android:layout_gravity="center"/>
 
-            <TextView
-                android:id="@+id/txt_highScoreName"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2.8"
-                android:text="Elias"
-                android:gravity="center|start"
-                android:textColor="@color/black"
-                android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/txt_highScoreName"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="Elias"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
 
-            <TextView
-                android:id="@+id/txt_highScore"
+            <TableRow
+                android:layout_gravity="center"
+                android:layout_weight="3"
+                android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3.0"
-                android:text="$150.000.000"
-                android:gravity="center|end"
-                android:textColor="@color/black"
-                android:textSize="16dp"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Score : "
+                    android:gravity="center|end"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/txt_highScore"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3.0"
+                    android:text="$150.000.000"
+                    android:gravity="center|end"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+            </TableRow>
 
-            <TextView
-                android:id="@+id/txt_highScoreDate"
+            <TableRow
+                android:layout_gravity="center"
+                android:layout_weight="2"
+                android:gravity="center"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="3.0"
-                android:text="01/01/2021"
-                android:gravity="center|end"
-                android:textColor="@color/black"
-                android:textSize="16dp"/>
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Level : "
+                    android:gravity="center|end"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+                <TextView
+                    android:id="@+id/txt_highScoreLevel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="01"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"/>
+            </TableRow>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

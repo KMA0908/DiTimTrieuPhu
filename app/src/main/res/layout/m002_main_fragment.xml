@@ -142,7 +142,7 @@
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_marginStart="40dp"
-                android:src="@drawable/ic_sound" />
+                android:src="@drawable/ic_settings" />
         </TableRow>
 
     </LinearLayout>

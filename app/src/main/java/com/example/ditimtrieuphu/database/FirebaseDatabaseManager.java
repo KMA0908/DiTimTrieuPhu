@@ -5,6 +5,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
@@ -54,6 +55,14 @@ public class FirebaseDatabaseManager {
     public Task<QuerySnapshot> getAllBadges() {
         CollectionReference reference = database.collection(BADGE_COLLECTION);
         return reference.get();
+    }
+
+    public Task<QuerySnapshot> getAllUserInfoSortedByProperty() {
+        CollectionReference collection = database.collection(USER_INFO_COLLECTION);
+
+        Query query = collection.orderBy("property");
+
+        return query.get();
     }
 
     // Badge relation collection

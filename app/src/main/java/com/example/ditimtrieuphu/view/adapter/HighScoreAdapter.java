@@ -15,22 +15,18 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.entity.HighScore;
 
 import java.text.DecimalFormat;
+import java.util.List;
 
 public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.ViewHoder> {
 
-    private int images[];
-    private String names[];
-    private int scores[];
-    private String dates[];
-    Context context;
+    private List<HighScore> highScoreList;
+    private Context context;
 
-    public HighScoreAdapter(int[] images, String[] names, int[] scores, String[] dates, Context context) {
-        this.images = images;
-        this.names = names;
-        this.scores = scores;
-        this.dates = dates;
+    public HighScoreAdapter(List<HighScore> highScoreList, Context context) {
+        this.highScoreList = highScoreList;
         this.context = context;
     }
 
@@ -44,12 +40,10 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull HighScoreAdapter.ViewHoder holder, int position) {
-        String scoreString = String.format("$%,d", scores[position]);
-
-        holder.image.setImageResource(images[position]);
-        holder.name.setText(names[position]);
-        holder.score.setText(scoreString);
-        holder.date.setText(dates[position]);
+        holder.highScore = highScoreList.get(position);
+        holder.name.setText(highScoreList.get(position).getName());
+        holder.score.setText(highScoreList.get(position).getScore());
+        holder.level.setText(highScoreList.get(position).getLevel());
         if(position % 2 == 1) {
             holder.cardView.setBackgroundColor(ContextCompat.getColor(context, R.color.light_yellow));
         }
@@ -57,13 +51,13 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.View
 
     @Override
     public int getItemCount() {
-        return names.length;
+        return highScoreList.size();
     }
 
     public class ViewHoder extends RecyclerView.ViewHolder {
-
+        HighScore highScore;
         ImageView image;
-        TextView name, score, date;
+        TextView name, score, level;
         CardView cardView;
 
         public ViewHoder(@NonNull View itemView) {
@@ -71,7 +65,7 @@ public class HighScoreAdapter extends RecyclerView.Adapter<HighScoreAdapter.View
             image = itemView.findViewById(R.id.image_highScore);
             name = itemView.findViewById(R.id.txt_highScoreName);
             score = itemView.findViewById(R.id.txt_highScore);
-            date = itemView.findViewById(R.id.txt_highScoreDate);
+            level = itemView.findViewById(R.id.txt_highScoreLevel);
             cardView = itemView.findViewById(R.id.cardview1);
         }
     }
