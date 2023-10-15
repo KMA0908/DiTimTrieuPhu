@@ -49,7 +49,12 @@ public class EquippedBadgeAdapter extends RecyclerView.Adapter<EquippedBadgeAdap
                 }
             }
         } catch (IndexOutOfBoundsException e) {
-
+            int iconId = mContext.getResources().getIdentifier("bg_equipped_badge", "drawable", mContext.getPackageName());
+            if (iconId != 0) {
+                Drawable drawable = mContext.getDrawable(iconId);
+                holder.mIconBadge.setImageDrawable(drawable);
+                holder.mRootView.setBackground(null);
+            }
         }
     }
 

@@ -36,6 +36,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     private TextView mPlayerLevelTextView;
     private TextView mPlayerStamina;
     // Minh: them view - end
+    private ImageView mShopImageView;
 
     public boolean musicIsOn = true;
 
@@ -53,6 +54,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         mPlayerLevelTextView = findViewById(R.id.tv_player_level);
         mPlayerStamina = findViewById(R.id.tv_player_stamina);
         // Minh: them phan hien thi ten va avatar - end.
+        mShopImageView = findViewById(R.id.iv_shop,this);
 
          // Minh: sua dung service choi bg music
         if (mBackgroundService != null) {
@@ -155,6 +157,10 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         // Su kien click vao avatar, navigate den frag trang ca nhan
         if (v.getId() == R.id.iv_person) {
             callBack.onCallBack(PlayerProfileFragment.KEY_SHOW_PLAYER_PROFILE_FRAGMENT);
+        }
+        // Su kien shop
+        if (v.getId() == R.id.iv_shop) {
+            callBack.onCallBack(ShopFragment.KEY_SHOP_FRAGMENT, null);
         }
     }
 

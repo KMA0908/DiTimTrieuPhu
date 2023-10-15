@@ -1,6 +1,5 @@
 package com.example.ditimtrieuphu.view.fragment;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.common.GameConstant;
+import com.example.ditimtrieuphu.common.UiUtils;
 import com.example.ditimtrieuphu.entity.Badge;
 import com.example.ditimtrieuphu.dto.PlayerInfo;
 import com.example.ditimtrieuphu.view.adapter.EquippedBadgeAdapter;
@@ -24,6 +25,8 @@ public class PlayerProfileFragment extends BaseFragment<MainFragViewModel>{
 
     private OnActionCallBack mCallBack;
     private List<Badge> mBagdes;
+    private List<Badge> mEquippedBagdes;
+    private UiUtils mUiUtils;
     // view
     private ImageView mBackImageView;
     private TextView mPlayerNameTextView;
@@ -35,6 +38,8 @@ public class PlayerProfileFragment extends BaseFragment<MainFragViewModel>{
 
     @Override
     protected void initViews() {
+        mUiUtils = UiUtils.getInstance();
+
         mBackImageView = findViewById(R.id.iv_back, this);
         mPlayerNameTextView = findViewById(R.id.tv_player_name);
         mPlayerLevelTextView = findViewById(R.id.tv_player_level);
@@ -43,9 +48,26 @@ public class PlayerProfileFragment extends BaseFragment<MainFragViewModel>{
         mEquippedBadgeRecyclerView = findViewById(R.id.rv_badges);
 
         mBagdes = new ArrayList<>();
-        mAdapter = new EquippedBadgeAdapter(mContext, mBagdes, objects -> {
+        mEquippedBagdes = new ArrayList<>();
+        mAdapter = new EquippedBadgeAdapter(mContext, mEquippedBagdes, objects -> {
             OwnedBadgeListDialog dialog = new OwnedBadgeListDialog();
             dialog.setBadges(mBagdes);
+            dialog.setCallbackOnEquipBadge(objects1 -> {
+                if (objects1 != null) {
+                    Badge changedBadge = (Badge) objects1[0];
+                    mUiUtils.showBlur(getParentFragmentManager());
+                    mModel.updateBadge(changedBadge, objects2 -> {
+                        // Update firebase xong cap nhat giao dien
+                        notifyEquippedBadgesData();
+                        mUiUtils.dismissBlur();
+                    }, objects2 -> {
+                        mUiUtils.dismissBlur();
+                        if (objects2 != null) {
+                            mUiUtils.showMessage(getParentFragmentManager(), (String) objects2[0]);
+                        }
+                    });
+                }
+            });
             dialog.show(getParentFragmentManager(), OwnedBadgeListDialog.TAG_DIALOG_OWNED_BADGES);
         });
         mEquippedBadgeRecyclerView.setLayoutManager(new GridLayoutManager(mContext, 3, RecyclerView.VERTICAL, false));
@@ -89,7 +111,20 @@ public class PlayerProfileFragment extends BaseFragment<MainFragViewModel>{
             // set cac badges so huu neu dang equip
             mBagdes.clear();
             mBagdes.addAll(mModel.getOwnedBadges());
-            mAdapter.notifyDataSetChanged();
+            notifyEquippedBadgesData();
         }
+    }
+
+    private void notifyEquippedBadgesData() {
+        if (mBagdes == null || mEquippedBagdes == null) {
+            return;
+        }
+        mEquippedBagdes.clear();
+        for (Badge badge: mBagdes) {
+            if (badge.isEquipped()) {
+                mEquippedBagdes.add(badge);
+            }
+        }
+        mAdapter.notifyDataSetChanged();
     }
 }

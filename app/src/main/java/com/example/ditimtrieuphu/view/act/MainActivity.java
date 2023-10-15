@@ -14,6 +14,7 @@ import com.example.ditimtrieuphu.view.fragment.M002MainFragment;
 import com.example.ditimtrieuphu.view.fragment.M003PlayFragment;
 import com.example.ditimtrieuphu.view.fragment.M004QuestionFragment;
 import com.example.ditimtrieuphu.view.fragment.PlayerProfileFragment;
+import com.example.ditimtrieuphu.view.fragment.ShopFragment;
 import com.example.ditimtrieuphu.view.fragment.SignUpFragment;
 import com.example.ditimtrieuphu.viewmodel.MainViewModel;
 
@@ -87,6 +88,13 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
                 PlayerProfileFragment fragment = new PlayerProfileFragment();
                 fragment.setCallBack(this);
                 showFragment(R.id.container_view, fragment, true);
+                break;
+            }
+            case ShopFragment.KEY_SHOP_FRAGMENT: {
+                ShopFragment shopFragment = new ShopFragment();
+                shopFragment.setmCallBack(this);
+                showFragment(R.id.container_view, shopFragment, true);
+                break;
             }
         }
     }

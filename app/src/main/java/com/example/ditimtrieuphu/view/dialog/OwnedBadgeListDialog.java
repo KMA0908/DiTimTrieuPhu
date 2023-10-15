@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,19 +15,22 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.common.UiUtils;
 import com.example.ditimtrieuphu.entity.Badge;
 import com.example.ditimtrieuphu.view.adapter.BadgeAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class OwnedBadgeListDialog extends DialogFragment {
     public static final String TAG_DIALOG_OWNED_BADGES = "TAG_DIALOG_OWNED_BADGES";
     private RecyclerView mOwnedBadgeRecyclerView;
     private BadgeAdapter mAdapter;
     private List<Badge> mBadges;
+    private Executable mOnEquipBadgeChangeExecutable;
+    private UiUtils mUiUtils;
 
     @Nullable
     @Override
@@ -44,8 +46,9 @@ public class OwnedBadgeListDialog extends DialogFragment {
         if (mBadges == null) {
             mBadges = new ArrayList<>();
         }
+        mUiUtils = UiUtils.getInstance();
         mOwnedBadgeRecyclerView = view.findViewById(R.id.rv_list_owned_badge);
-        mAdapter = new BadgeAdapter(getContext(), mBadges, objects -> onEquipBadge(objects));
+        mAdapter = new BadgeAdapter(getContext(), mBadges, objects -> onEquipBadgeChange(objects), objects -> onEquippedFail());
         mOwnedBadgeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mOwnedBadgeRecyclerView.setAdapter(mAdapter);
     }
@@ -71,9 +74,20 @@ public class OwnedBadgeListDialog extends DialogFragment {
         }
     }
 
-    private void onEquipBadge(Object...objects) {
+    public void setCallbackOnEquipBadge(Executable callback) {
+        mOnEquipBadgeChangeExecutable = callback;
+    }
+
+    private void onEquipBadgeChange(Object...objects) {
         if (objects != null && objects.length > 0) {
             int index = (Integer) objects[0];
+            if (mOnEquipBadgeChangeExecutable != null) {
+                mOnEquipBadgeChangeExecutable.execute(mBadges.get(index));
+            }
         }
+    }
+
+    private void onEquippedFail() {
+        mUiUtils.showMessage(getParentFragmentManager(), "Số lượng huy hiệu trang bị đã full.");
     }
 }

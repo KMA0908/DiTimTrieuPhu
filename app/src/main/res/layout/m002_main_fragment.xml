@@ -124,10 +124,16 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/iv_shop"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:src="@drawable/ic_shop" />
+
+            <ImageView
                 android:id="@+id/iv_highScore"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="40dp"
                 android:src="@drawable/ic_champion" />
 
             <ImageView

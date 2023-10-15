@@ -20,8 +20,8 @@ public interface BadgeDao {
     @Query("SELECT * FROM badge WHERE id = :id")
     Badge getById(String id);
 
-    @Query("UPDATE badge SET owned = :owned, equipped = :equipped WHERE id = :id")
-    void updateOwnedAndEquippedById(String id, boolean owned, boolean equipped);
+    @Query("UPDATE badge SET owned = :owned, equipped = :equipped, relationId = :relationId WHERE id = :id")
+    void updateOwnedAndEquippedById(String id, boolean owned, boolean equipped, String relationId);
 
     @Query("SELECT * FROM badge WHERE owned = 1")
     List<Badge> getOwnedBadges();

@@ -2,6 +2,7 @@ package com.example.ditimtrieuphu.viewmodel;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -10,6 +11,8 @@ import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.dto.PlayerInfo;
 import com.example.ditimtrieuphu.entity.Badge;
 import com.example.ditimtrieuphu.session.UserSessionManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.util.List;
 
@@ -60,6 +63,22 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
                 fail.execute(t.getException().getMessage());
             }
         });
+    }
+
+    public void updateBadge(Badge badge, Executable success, Executable fail) {
+        mUserSessionManager.saveBadgeRelation(badge)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+
+                        if (success != null) {
+                            success.execute();
+                        }
+                    } else {
+                        if (fail != null) {
+                            fail.execute(task.getException().getMessage());
+                        }
+                    }
+                });
     }
 
     // Getter

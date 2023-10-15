@@ -5,6 +5,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.example.ditimtrieuphu.dto.BadgeRelation;
+
 @Entity(tableName = "badge")
 public class Badge {
     @PrimaryKey
@@ -36,9 +38,12 @@ public class Badge {
     @ColumnInfo(name = "equipped")
     private boolean equipped;
 
+    @ColumnInfo(name = "relationId")
+    private String relationId;
+
     public Badge() {}
 
-    public Badge(@NonNull String id, String name, String effect, String icon, String description, long priceMoney, int priceRocket, boolean owned, boolean equipped) {
+    public Badge(@NonNull String id, String name, String effect, String icon, String description, long priceMoney, int priceRocket, boolean owned, boolean equipped, String relationId) {
         this.id = id;
         this.name = name;
         this.effect = effect;
@@ -48,6 +53,7 @@ public class Badge {
         this.priceRocket = priceRocket;
         this.owned = owned;
         this.equipped = equipped;
+        this.relationId = relationId;
     }
 
     public String getId() {
@@ -120,5 +126,22 @@ public class Badge {
 
     public void setEquipped(boolean equipped) {
         this.equipped = equipped;
+    }
+
+    public String getRelationId() {
+        return relationId;
+    }
+
+    public void setRelationId(String relationId) {
+        this.relationId = relationId;
+    }
+
+    public BadgeRelation toBadgeRelationDto(String userId) {
+        BadgeRelation badgeRelation = new BadgeRelation();
+        badgeRelation.setBadgeId(id);
+        badgeRelation.setBadgeRelationId(relationId);
+        badgeRelation.setEquipped(equipped);
+        badgeRelation.setUserId(userId);
+        return badgeRelation;
     }
 }

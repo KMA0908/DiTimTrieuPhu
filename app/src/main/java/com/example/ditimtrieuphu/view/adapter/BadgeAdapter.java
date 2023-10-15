@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.common.GameConstant;
 import com.example.ditimtrieuphu.entity.Badge;
 
 import java.util.List;
@@ -23,11 +24,13 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
     private Context mContext;
     private List<Badge> mOwnedBadge;
     private Executable mButtonEvent;
+    private Executable mOnEquipFail;
 
-    public BadgeAdapter(Context context, List<Badge> list, Executable buttonEvent) {
+    public BadgeAdapter(Context context, List<Badge> list, Executable buttonEvent, Executable onEquipFail) {
         mContext = context;
         mOwnedBadge = list;
         mButtonEvent = buttonEvent;
+        mOnEquipFail = onEquipFail;
     }
 
     @NonNull
@@ -64,6 +67,16 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
         }
     }
 
+    private int getEquippedBadgesCount() {
+        int count = 0;
+        for (Badge badge: mOwnedBadge) {
+            if (badge.isEquipped()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     class BadgeViewHolder extends RecyclerView.ViewHolder {
         ImageView mIconBadgeImageView;
         TextView mBadgeNameTextView;
@@ -76,6 +89,12 @@ public class BadgeAdapter extends RecyclerView.Adapter<BadgeAdapter.BadgeViewHol
             mEquipButton = itemView.findViewById(R.id.bt_equip);
 
             mEquipButton.setOnClickListener(view -> {
+                // Check full 5 equip thi khong cho equip nua
+                if (getEquippedBadgesCount() >= GameConstant.MAX_EQUIPPED_BADGE
+                        && !mOwnedBadge.get(getAdapterPosition()).isEquipped()) {
+                    mOnEquipFail.execute();
+                    return;
+                }
                 if (mOwnedBadge.get(getAdapterPosition()).isEquipped()) {
                     mOwnedBadge.get(getAdapterPosition()).setEquipped(false);
                     setStateButton(mEquipButton, false);

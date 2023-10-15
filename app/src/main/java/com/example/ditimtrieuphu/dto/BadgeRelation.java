@@ -1,22 +1,19 @@
 package com.example.ditimtrieuphu.dto;
 
 public class BadgeRelation {
-    public static final String KEY_ID = "id";
-    public static final String KEY_USER_ID = "userId";
-    public static final String KEY_BADGE_ID = "badgeId";
-    public static final String KEY_EQUIPPED = "equipped";
+    public static final String[] KEYS = {"badgeRelationId", "userId", "badgeId", "equipped"};
 
-    private String id;
+    private String badgeRelationId;
     private String userId;
     private String badgeId;
     private boolean equipped;
 
-    public String getId() {
-        return id;
+    public String getBadgeRelationId() {
+        return badgeRelationId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setBadgeRelationId(String badgeRelationId) {
+        this.badgeRelationId = badgeRelationId;
     }
 
     public String getUserId() {
@@ -42,4 +39,5 @@ public class BadgeRelation {
     public void setEquipped(boolean equipped) {
         this.equipped = equipped;
     }
+
 }

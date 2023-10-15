@@ -1,6 +1,8 @@
 package com.example.ditimtrieuphu.session;
 
 import android.content.Context;
+import android.text.TextUtils;
+import android.util.Log;
 
 import androidx.room.Room;
 
@@ -9,8 +11,11 @@ import com.example.ditimtrieuphu.common.GameConstant;
 import com.example.ditimtrieuphu.database.AppDatabase;
 import com.example.ditimtrieuphu.database.FirebaseDatabaseManager;
 import com.example.ditimtrieuphu.dto.BadgeRelation;
+import com.example.ditimtrieuphu.dto.BonusItemRelation;
 import com.example.ditimtrieuphu.dto.PlayerInfo;
 import com.example.ditimtrieuphu.entity.Badge;
+import com.example.ditimtrieuphu.entity.BonusItem;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -25,12 +30,15 @@ import java.util.List;
 
 public class UserSessionManager {
     private static UserSessionManager sUserSessionManager;
+    private static final String MESSAGE_ERROR = "MESSAGE_ERROR";
 
     private FirebaseAuth auth;
     private FirebaseDatabaseManager firebaseDatabaseManager;
     private AppDatabase appDatabase;
     private PlayerInfo playerInfo;
     private List<Badge> ownedBadges;
+    private List<BonusItem> ownedItems;
+    private List<BonusItem> allItems;
 
     private UserSessionManager(Context context) {
         auth = FirebaseAuth.getInstance();
@@ -39,6 +47,8 @@ public class UserSessionManager {
                 .allowMainThreadQueries()
                 .build();
         ownedBadges = new ArrayList<>();
+        ownedItems = new ArrayList<>();
+        allItems = new ArrayList<>();
     }
 
     public static UserSessionManager getInstance(Context context) {
@@ -95,6 +105,7 @@ public class UserSessionManager {
                         List<PlayerInfo> playerInfos = queryDocumentSnapshots.toObjects(PlayerInfo.class);
                         if (playerInfos.size() > 0) {
                             playerInfo = playerInfos.get(0);
+                            playerInfo.setId(queryDocumentSnapshots.getDocuments().get(0).getId());
                             playerInfo.setUserId(getCurrentUser().getUid());
                         }
                     });
@@ -106,6 +117,16 @@ public class UserSessionManager {
     public void syncOwnedBadges() {
         ownedBadges.clear();
         ownedBadges.addAll(appDatabase.badgeDao().getOwnedBadges());
+    }
+
+    public void syncOwnedItems() {
+        ownedItems.clear();
+        ownedItems.addAll(appDatabase.bonusItemDao().getOwnedItems());
+    }
+
+    public void syncItems() {
+        allItems.clear();
+        allItems.addAll(appDatabase.bonusItemDao().getAll());
     }
 
     public void syncGameResources(Executable success, Executable fail) {
@@ -131,11 +152,12 @@ public class UserSessionManager {
                                     if (t.isSuccessful()) {
                                         List<DocumentSnapshot> relations = t.getResult().getDocuments();
                                         for (DocumentSnapshot relation: relations) {
+                                            Log.d("MinhNTn", "syncGameResources: "+ relation.getData());
                                             BadgeRelation badgeRelation = relation.toObject(BadgeRelation.class);
                                             appDatabase.badgeDao().updateOwnedAndEquippedById(badgeRelation.getBadgeId(), true,
-                                                    badgeRelation.isEquipped());
+                                                    badgeRelation.isEquipped(), relation.getId());
                                         }
-                                        success.execute();
+                                        syncBonusItem(success, fail);
                                     } else {
                                         if (fail != null) {
                                             fail.execute(task.getException().getMessage());
@@ -143,7 +165,7 @@ public class UserSessionManager {
                                     }
                                 });
                     } else {
-                        success.execute();
+                        syncBonusItem(success, fail);
                     }
                 } else {
                     if (fail != null) {
@@ -152,6 +174,81 @@ public class UserSessionManager {
                 }
             });
         }
+    }
+
+    public void syncBonusItem(Executable success, Executable fail) {
+        // sync data cua bonus item
+        firebaseDatabaseManager.getAllBonusItems().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                List<DocumentSnapshot> snapshots = task.getResult().getDocuments();
+                for (DocumentSnapshot d: snapshots) {
+                    BonusItem bonusItem = d.toObject(BonusItem.class);
+                    bonusItem.setId(d.getId());
+                    if (appDatabase.bonusItemDao().getById(bonusItem.getId()) == null) {
+                        appDatabase.bonusItemDao().add(bonusItem);
+                    } else {
+                        appDatabase.bonusItemDao().update(bonusItem);
+                    }
+                }
+                // sync relation cua item voi user hien tai
+                if (userAvailable()) {
+                    firebaseDatabaseManager
+                            .getBonusItemRelationByUserId(getCurrentUserId())
+                            .addOnCompleteListener(t -> {
+                                if (t.isSuccessful()) {
+                                    List<DocumentSnapshot> relations = t.getResult().getDocuments();
+                                    syncItems();
+                                    for (DocumentSnapshot relation: relations) {
+                                        BonusItemRelation bonusItemRelation = relation.toObject(BonusItemRelation.class);
+                                        appDatabase.bonusItemDao().updateAmountOwned(relation.getId(), bonusItemRelation.getAmount());
+                                    }
+                                    syncOwnedBadges();
+                                    success.execute();
+                                } else {
+                                    if (fail != null) {
+                                        fail.execute(task.getException().getMessage());
+                                    }
+                                }
+                            });
+                } else {
+                    success.execute();
+                }
+            }
+        });
+    }
+
+    public Task<Void> saveBadgeRelation(Badge badge) {
+        if (userAvailable()) {
+            return firebaseDatabaseManager.saveBadgeRelation(badge.toBadgeRelationDto(getCurrentUserId()))
+                    .addOnSuccessListener(unused -> {
+                        appDatabase.badgeDao().updateBadge(badge);
+                    });
+        }
+        return Tasks.forException(new RuntimeException(MESSAGE_ERROR));
+    }
+
+    public Task<DocumentReference> saveBonusItemRelation(BonusItem bonusItem) {
+        return firebaseDatabaseManager.saveBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()))
+                .addOnCompleteListener(task -> {
+                    bonusItem.setRelationId(task.getResult().getId());
+                    appDatabase.bonusItemDao().update(bonusItem);
+                    // Cap nhat lai relation id
+                    firebaseDatabaseManager.updateBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()));
+                    payForItem(bonusItem.getPriceMoney());
+                });
+    }
+
+    public Task<Void> updateBonusItemRelation(BonusItem bonusItem) {
+        return firebaseDatabaseManager.updateBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()))
+                .addOnCompleteListener(task -> {
+                    appDatabase.bonusItemDao().update(bonusItem);
+                    payForItem(bonusItem.getPriceMoney());
+                });
+    }
+
+    public void payForItem(long price) {
+        playerInfo.setProperty(playerInfo.getProperty() - price);
+        firebaseDatabaseManager.updatePlayerInfo(playerInfo);
     }
 
     // Getter
@@ -173,5 +270,13 @@ public class UserSessionManager {
 
     public List<Badge> getOwnedBadges() {
         return ownedBadges;
+    }
+
+    public List<BonusItem> getOwnedItems() {
+        return ownedItems;
+    }
+
+    public List<BonusItem> getAllItems() {
+        return allItems;
     }
 }
