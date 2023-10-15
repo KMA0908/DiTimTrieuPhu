@@ -10,6 +10,7 @@ import com.example.ditimtrieuphu.ContextAccessable;
 import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.dto.PlayerInfo;
 import com.example.ditimtrieuphu.entity.Badge;
+import com.example.ditimtrieuphu.entity.BonusItem;
 import com.example.ditimtrieuphu.session.UserSessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -93,5 +94,9 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
 
     public List<Badge> getOwnedBadges() {
         return mUserSessionManager.getOwnedBadges();
+    }
+
+    public List<BonusItem> getOwnedBonusItem() {
+        return mUserSessionManager.getOwnedItems();
     }
 }

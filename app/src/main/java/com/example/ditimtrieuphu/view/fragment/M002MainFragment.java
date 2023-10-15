@@ -17,6 +17,7 @@ import com.example.ditimtrieuphu.view.dialog.ChangeUserNameDialog;
 import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
 import com.example.ditimtrieuphu.view.dialog.SettingsDialog;
 import com.example.ditimtrieuphu.view.dialog.SimpleMessageDialog;
+import com.example.ditimtrieuphu.view.dialog.UseItemPlayDialog;
 import com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
@@ -120,10 +121,14 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
 
     @Override
     public void onClick(View v) {
-        if(v.getId()==R.id.iv_play_now){
-            showPlayFragment();
+        if(v.getId()==R.id.iv_play_now) {
+            // show dialog chon dung vat pham truoc khi choi
+            UseItemPlayDialog dialog = new UseItemPlayDialog();
+            dialog.setOwnedItems(mModel.getOwnedBonusItem());
+            dialog.show(getParentFragmentManager(), UseItemPlayDialog.TAG);
+            //showPlayFragment();
         }
-        if(v.getId()==R.id.iv_info){
+        if(v.getId()==R.id.iv_info) {
             showTutorial();
         }
         if(v.getId()==R.id.iv_music){
