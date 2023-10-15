@@ -14,6 +14,23 @@ public class HighScore {
     @ColumnInfo(name = "Score")
     private String Score;
 
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    private String level;
+    public HighScore(@NonNull String name, String score,String level) {
+        this.name = name;
+        Score = score;
+        this.level = level;
+    }
+    public HighScore() {
+
+    }
     @NonNull
     public String getName() {
         return name;
