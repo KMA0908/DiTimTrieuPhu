@@ -37,6 +37,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
     private TextView mPlayerStamina;
     // Minh: them view - end
     private ImageView mShopImageView;
+    private ImageView mBagImageView;
 
     public boolean musicIsOn = true;
 
@@ -55,6 +56,7 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         mPlayerStamina = findViewById(R.id.tv_player_stamina);
         // Minh: them phan hien thi ten va avatar - end.
         mShopImageView = findViewById(R.id.iv_shop,this);
+        mBagImageView = findViewById(R.id.iv_bag, this);
 
          // Minh: sua dung service choi bg music
         if (mBackgroundService != null) {
@@ -161,6 +163,9 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
         // Su kien shop
         if (v.getId() == R.id.iv_shop) {
             callBack.onCallBack(ShopFragment.KEY_SHOP_FRAGMENT, null);
+        }
+        if (v.getId() == R.id.iv_bag) {
+            callBack.onCallBack(BagFragment.KEY_BAG_FRAGMENT, null);
         }
     }
 

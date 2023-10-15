@@ -61,17 +61,17 @@
         android:paddingHorizontal="8dp">
 
         <ImageView
-            android:layout_centerVertical="true"
             android:id="@+id/iv_bg_stamina"
             android:layout_width="match_parent"
             android:layout_height="25dp"
+            android:layout_centerVertical="true"
             android:background="@drawable/ic_play_answer" />
 
         <ImageView
             android:id="@+id/iv_stamina_icon"
-            android:layout_centerVertical="true"
             android:layout_width="20dp"
             android:layout_height="40dp"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_stamina" />
 
         <TextView
@@ -121,33 +121,43 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_marginHorizontal="16dp"
+            android:gravity="center"
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/iv_shop"
-                android:layout_width="46dp"
+                android:layout_width="0dp"
                 android:layout_height="46dp"
+                android:layout_weight="1"
                 android:src="@drawable/ic_shop" />
 
             <ImageView
-                android:id="@+id/iv_highScore"
-                android:layout_width="46dp"
+                android:layout_weight="1"
+                android:id="@+id/iv_bag"
+                android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="40dp"
+                android:src="@drawable/bag" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/iv_highScore"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
                 android:src="@drawable/ic_champion" />
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/iv_info"
-                android:layout_width="46dp"
+                android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="40dp"
                 android:src="@drawable/ic_info" />
 
             <ImageView
+                android:layout_weight="1"
                 android:id="@+id/iv_music"
-                android:layout_width="46dp"
+                android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="40dp"
                 android:src="@drawable/ic_sound" />
         </TableRow>
 

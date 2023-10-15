@@ -60,6 +60,8 @@ public class ShopViewModel extends ViewModel implements ContextAccessable {
     }
 
     private void addOwnedItem(BonusItem bonusItem) {
-        mUserSessionManager.getOwnedItems().add(bonusItem);
+        if (!mUserSessionManager.getOwnedItems().contains(bonusItem)) {
+            mUserSessionManager.getOwnedItems().add(bonusItem);
+        }
     }
 }

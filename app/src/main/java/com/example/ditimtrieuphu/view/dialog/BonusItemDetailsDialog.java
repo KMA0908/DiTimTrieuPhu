@@ -25,10 +25,12 @@ public class BonusItemDetailsDialog extends DialogFragment {
     private ImageView mItemImageView;
     private TextView mDetaiilTextView;
     private TextView mItemNameTextView;
+    private TextView mItemAmountTextView;
     private AppCompatButton mCancelButton;
     private AppCompatButton mBuyButton;
     private BonusItem mBonusItem;
     private Executable mItemBuyClickExecutable;
+    private boolean mIsItemInShop;
 
     @Nullable
     @Override
@@ -45,6 +47,7 @@ public class BonusItemDetailsDialog extends DialogFragment {
         mDetaiilTextView = view.findViewById(R.id.tv_detail);
         mCancelButton = view.findViewById(R.id.bt_cancel);
         mBuyButton = view.findViewById(R.id.bt_buy);
+        mItemAmountTextView = view.findViewById(R.id.tv_amount);
 
         if (mBonusItem != null) {
             setItemData();
@@ -89,5 +92,20 @@ public class BonusItemDetailsDialog extends DialogFragment {
         }
         mItemNameTextView.setText(mBonusItem.getName());
         mDetaiilTextView.setText(mBonusItem.getDetail());
+        String amount = "Số lượng: " + mBonusItem.getAmount();
+        mItemAmountTextView.setText(amount);
+        if (mIsItemInShop) {
+            mCancelButton.setVisibility(View.VISIBLE);
+            mBuyButton.setVisibility(View.VISIBLE);
+            mItemAmountTextView.setVisibility(View.GONE);
+        } else {
+            mCancelButton.setVisibility(View.GONE);
+            mBuyButton.setVisibility(View.GONE);
+            mItemAmountTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void setIsItemInShop(boolean mIsItemInShop) {
+        this.mIsItemInShop = mIsItemInShop;
     }
 }

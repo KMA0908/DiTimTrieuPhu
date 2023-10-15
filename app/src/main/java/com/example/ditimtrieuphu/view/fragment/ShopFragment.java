@@ -62,6 +62,7 @@ public class ShopFragment extends BaseFragment<ShopViewModel> {
             int index = (int) objects[0];
             BonusItemDetailsDialog dialog = new BonusItemDetailsDialog();
             dialog.setBonusItem(mBonusItems.get(index));
+            dialog.setIsItemInShop(true);
             dialog.setItemBuyClickExecutable(objects1 -> {
                 if (objects1 != null && objects1.length > 0) {
                     BonusItem bonusItem = (BonusItem) objects1[0];

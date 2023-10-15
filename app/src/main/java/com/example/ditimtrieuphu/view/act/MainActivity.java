@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentManager;
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog;
+import com.example.ditimtrieuphu.view.fragment.BagFragment;
 import com.example.ditimtrieuphu.view.fragment.HighScoreFragment;
 import com.example.ditimtrieuphu.view.fragment.LoginFragment;
 import com.example.ditimtrieuphu.view.fragment.M001SplashFragment;
@@ -94,6 +95,12 @@ public class MainActivity extends BaseAct<MainViewModel> implements OnActionCall
                 ShopFragment shopFragment = new ShopFragment();
                 shopFragment.setmCallBack(this);
                 showFragment(R.id.container_view, shopFragment, true);
+                break;
+            }
+            case BagFragment.KEY_BAG_FRAGMENT: {
+                BagFragment fragment = new BagFragment();
+                fragment.setCallBack(this);
+                showFragment(R.id.container_view, fragment, true);
                 break;
             }
         }

@@ -119,14 +119,16 @@ public class UserSessionManager {
         ownedBadges.addAll(appDatabase.badgeDao().getOwnedBadges());
     }
 
-    public void syncOwnedItems() {
-        ownedItems.clear();
-        ownedItems.addAll(appDatabase.bonusItemDao().getOwnedItems());
-    }
-
     public void syncItems() {
         allItems.clear();
+        ownedItems.clear();
         allItems.addAll(appDatabase.bonusItemDao().getAll());
+        Log.d("MinhNTn", "syncItems: " + allItems.size());
+        for (BonusItem bonusItem: allItems) {
+            if (bonusItem.getAmount() > 0) {
+                ownedItems.add(bonusItem);
+            }
+        }
     }
 
     public void syncGameResources(Executable success, Executable fail) {
@@ -197,11 +199,11 @@ public class UserSessionManager {
                             .addOnCompleteListener(t -> {
                                 if (t.isSuccessful()) {
                                     List<DocumentSnapshot> relations = t.getResult().getDocuments();
-                                    syncItems();
                                     for (DocumentSnapshot relation: relations) {
                                         BonusItemRelation bonusItemRelation = relation.toObject(BonusItemRelation.class);
-                                        appDatabase.bonusItemDao().updateAmountOwned(relation.getId(), bonusItemRelation.getAmount());
+                                        appDatabase.bonusItemDao().updateAmountOwned(bonusItemRelation.getItemId(), bonusItemRelation.getAmount());
                                     }
+                                    syncItems();
                                     syncOwnedBadges();
                                     success.execute();
                                 } else {

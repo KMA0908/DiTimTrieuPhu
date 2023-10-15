@@ -41,10 +41,19 @@
                 android:text="aaa"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
+            <TextView
+                android:layout_marginStart="16dp"
+                android:id="@+id/tv_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="aaa"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
         </LinearLayout>
     </TableRow>
 
     <TableRow
+        android:id="@+id/tr_button"
         android:layout_marginTop="16dp"
         android:paddingHorizontal="16dp"
         android:layout_width="match_parent"
