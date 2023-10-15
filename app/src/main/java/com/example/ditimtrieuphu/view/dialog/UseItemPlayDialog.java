@@ -34,6 +34,7 @@ public class UseItemPlayDialog extends DialogFragment {
     private List<BonusItem> mOwnedItems;
     private Executable mPlayExecutable;
     private Executable mItemUsedExecutable;
+    private List<BonusItem> usedItem;
 
     @Nullable
     @Override
@@ -53,14 +54,15 @@ public class UseItemPlayDialog extends DialogFragment {
         if (mOwnedItems == null) {
             mOwnedItems = new ArrayList<>();
         }
+        usedItem = new ArrayList<>();
         mAdapter = new ItemUsedAdapter(mOwnedItems, getContext(), this::onItemChecked);
         mItemRecyclerView.setAdapter(mAdapter);
         mItemRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPlayX1Button.setOnClickListener(view1 -> {
-            mPlayExecutable.execute(0);
+            mPlayExecutable.execute(0, usedItem);
         });
         mPlayX1Button.setOnClickListener(view1 -> {
-            mPlayExecutable.execute(1);
+            mPlayExecutable.execute(1, usedItem);
         });
     }
 
@@ -96,7 +98,11 @@ public class UseItemPlayDialog extends DialogFragment {
         if (objects != null && objects.length > 0) {
             int index = (int) objects[0];
             boolean checked = (boolean) objects[1];
-
+            if (checked) {
+                usedItem.add(mOwnedItems.get(index));
+            } else {
+                usedItem.remove(mOwnedItems.get(index));
+            }
         }
     }
 }

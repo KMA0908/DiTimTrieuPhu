@@ -15,14 +15,17 @@ import com.example.ditimtrieuphu.session.UserSessionManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragViewModel extends ViewModel implements ContextAccessable {
     private UserSessionManager mUserSessionManager;
     private final MutableLiveData<PlayerInfo> mPlayerInfoMutableLiveData;
+    private List<BonusItem> itemUsed;
 
     public MainFragViewModel() {
         mPlayerInfoMutableLiveData = new MutableLiveData<>();
+        itemUsed = new ArrayList<>();
     }
 
     public void logout(Executable success, Executable fail) {
@@ -80,6 +83,15 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
                         }
                     }
                 });
+    }
+
+    public void updateItems(List<BonusItem> bonusItems) {
+        itemUsed.clear();
+        itemUsed.addAll(bonusItems);
+        for (BonusItem item: bonusItems) {
+            item.setAmount(item.getAmount() - 1);
+            mUserSessionManager.updateBonusItemRelation(item);
+        }
     }
 
     // Getter

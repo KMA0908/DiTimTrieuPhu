@@ -158,7 +158,6 @@
                 android:id="@+id/iv_music"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:layout_marginStart="40dp"
                 android:src="@drawable/ic_settings" />
         </TableRow>
 

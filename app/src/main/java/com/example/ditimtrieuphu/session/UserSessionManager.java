@@ -1,7 +1,6 @@
 package com.example.ditimtrieuphu.session;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.room.Room;
@@ -15,7 +14,6 @@ import com.example.ditimtrieuphu.dto.BonusItemRelation;
 import com.example.ditimtrieuphu.dto.PlayerInfo;
 import com.example.ditimtrieuphu.entity.Badge;
 import com.example.ditimtrieuphu.entity.BonusItem;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
@@ -123,11 +121,11 @@ public class UserSessionManager {
         allItems.clear();
         ownedItems.clear();
         allItems.addAll(appDatabase.bonusItemDao().getAll());
-        Log.d("MinhNTn", "syncItems: " + allItems.size());
         for (BonusItem bonusItem: allItems) {
             if (bonusItem.getAmount() > 0) {
                 ownedItems.add(bonusItem);
             }
+            Log.d("MinhNTn", "syncItems: " + bonusItem.getRelationId());
         }
     }
 
@@ -201,7 +199,7 @@ public class UserSessionManager {
                                     List<DocumentSnapshot> relations = t.getResult().getDocuments();
                                     for (DocumentSnapshot relation: relations) {
                                         BonusItemRelation bonusItemRelation = relation.toObject(BonusItemRelation.class);
-                                        appDatabase.bonusItemDao().updateAmountOwned(bonusItemRelation.getItemId(), bonusItemRelation.getAmount());
+                                        appDatabase.bonusItemDao().updateAmountAndRelationOwned(bonusItemRelation.getItemId(), bonusItemRelation.getAmount(), bonusItemRelation.getItemRelationId());
                                     }
                                     syncItems();
                                     syncOwnedBadges();
@@ -241,6 +239,10 @@ public class UserSessionManager {
     }
 
     public Task<Void> updateBonusItemRelation(BonusItem bonusItem) {
+        // Neu so luong update bang 0 thi xoa
+        if (bonusItem.getAmount() == 0) {
+            return firebaseDatabaseManager.deleteBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()));
+        }
         return firebaseDatabaseManager.updateBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()))
                 .addOnCompleteListener(task -> {
                     appDatabase.bonusItemDao().update(bonusItem);

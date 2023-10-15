@@ -116,4 +116,10 @@ public class FirebaseDatabaseManager {
         return reference.document(bonusItemRelation.getItemRelationId())
                 .set(commonUtils.convertToDto(BonusItemRelation.KEYS, bonusItemRelation));
     }
+
+    public Task<Void> deleteBonusItemRelation(BonusItemRelation bonusItemRelation) {
+        CollectionReference reference = database.collection(BONUS_ITEM_RELATION_COLLECTION);
+        return reference.document(bonusItemRelation.getItemRelationId())
+                .delete();
+    }
 }

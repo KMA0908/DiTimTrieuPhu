@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.common.GameConstant;
+import com.example.ditimtrieuphu.entity.BonusItem;
 import com.example.ditimtrieuphu.view.dialog.ChangeUserNameDialog;
 import com.example.ditimtrieuphu.view.dialog.CustomDialogInfo;
 import com.example.ditimtrieuphu.view.dialog.SettingsDialog;
@@ -20,6 +21,8 @@ import com.example.ditimtrieuphu.view.dialog.SimpleMessageDialog;
 import com.example.ditimtrieuphu.view.dialog.UseItemPlayDialog;
 import com.example.ditimtrieuphu.view.dialog.WaitingLoadingBlurDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
+
+import java.util.List;
 
 public class M002MainFragment extends BaseFragment<MainFragViewModel> {
 
@@ -125,8 +128,14 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
             // show dialog chon dung vat pham truoc khi choi
             UseItemPlayDialog dialog = new UseItemPlayDialog();
             dialog.setOwnedItems(mModel.getOwnedBonusItem());
+            dialog.setButtonExecutable(objects -> {
+                int stamina = (int) objects[0];
+                List<BonusItem> bonusItems = (List<BonusItem>) objects[1];
+                mModel.updateItems(bonusItems);
+                showPlayFragment();
+            });
             dialog.show(getParentFragmentManager(), UseItemPlayDialog.TAG);
-            //showPlayFragment();
+            //
         }
         if(v.getId()==R.id.iv_info) {
             showTutorial();

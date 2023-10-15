@@ -20,8 +20,8 @@ public interface BonusItemDao {
     @Query("SELECT * FROM bonus_item WHERE id = :id")
     BonusItem getById(String id);
 
-    @Query("UPDATE bonus_item SET amount = :amount WHERE id = :id")
-    void updateAmountOwned(String id, int amount);
+    @Query("UPDATE bonus_item SET amount = :amount, relationId = :relationId WHERE id = :id")
+    void updateAmountAndRelationOwned(String id, int amount, String relationId);
 
     @Query("SELECT * FROM bonus_item")
     List<BonusItem> getAll();
