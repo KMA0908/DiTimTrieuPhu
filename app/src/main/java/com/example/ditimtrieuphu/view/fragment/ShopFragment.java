@@ -35,7 +35,7 @@ public class ShopFragment extends BaseFragment<ShopViewModel> {
 
     @Override
     protected void initViews() {
-        mUiUtils = UiUtils.getInstance();
+        mUiUtils = UiUtils.getInstance(getContext());
         mBonusItems = mModel.getAllItem();
         recyclerView = findViewById(R.id.rcv_shop);
         adapter = new ItemShopAdapter(getContext(), mBonusItems, this::onItemShopClicked);

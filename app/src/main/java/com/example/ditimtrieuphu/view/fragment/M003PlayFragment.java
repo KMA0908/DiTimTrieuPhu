@@ -20,9 +20,12 @@ import com.example.ditimtrieuphu.App;
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
 import com.example.ditimtrieuphu.async.QuestionManager;
+import com.example.ditimtrieuphu.common.GameConstant;
 import com.example.ditimtrieuphu.database.AppDatabase;
+import com.example.ditimtrieuphu.entity.BonusItem;
 import com.example.ditimtrieuphu.entity.Question;
 import com.example.ditimtrieuphu.view.dialog.BarChartQuestion;
+import com.example.ditimtrieuphu.view.dialog.GameResultDialog;
 import com.example.ditimtrieuphu.view.dialog.HelpCallDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
 
@@ -96,6 +99,12 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                     initDataQuestion(data);
                 });
             }
+        });
+
+        // observe money
+        mModel.totalMoneyLiveData.observe(this, money -> {
+            String moneyString = String.valueOf(money);
+            tvMoney.setText(moneyString);
         });
     }
 
@@ -529,6 +538,10 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                                         frameCaseB.setVisibility(View.VISIBLE);
                                         frameCaseC.setVisibility(View.VISIBLE);
                                         frameCaseD.setVisibility(View.VISIBLE);
+                                        // Cong tien thuong hien co
+                                        long currentMoney = mModel.totalMoneyLiveData.getValue();
+                                        mModel.totalExp += GameConstant.EXP_REWARD[index-1];
+                                        mModel.totalMoneyLiveData.setValue(currentMoney + GameConstant.MONEY_REWARD[index-1]);
                                         goToNextQuestion(++index);
                                     }
                                 }
@@ -538,8 +551,20 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             new Handler().postDelayed(new Runnable() {
                                 @Override
                                 public void run() {
-                                    callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
-                                    App.getInstance().getStorage().resetPlaySession();
+                                    GameResultDialog dialog = new GameResultDialog();
+                                    // Tinh bonus tu item va Tinh bonus tu huy hieu
+                                    float heSo = mModel.getHeSoBadges() + mModel.getHeSoBonusItem();
+                                    final long finalMoney = (long) (mModel.totalMoneyLiveData.getValue() * mModel.heSoChoi + mModel.totalMoneyLiveData.getValue()*heSo);
+                                    dialog.setDataResult(finalMoney, mModel.totalExp);
+                                    dialog.setmConfirmExecutable(objects -> {
+                                        // update thong so nguoi choi
+                                        //TODO check flag dung cuoc choi dung luc
+                                        mModel.updateMoneyAndExpPlayer(finalMoney, mModel.totalExp);
+                                        mModel.resetPlaySessionInfo();
+                                        callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
+                                        App.getInstance().getStorage().resetPlaySession();
+                                    });
+                                    dialog.show(getParentFragmentManager(), GameResultDialog.TAG);
                                 }
                             },2500);
 
@@ -622,81 +647,66 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         switch (id) {
             case 1 : {
                 tvIndexQuestion.setText("Câu 1");
-                tvMoney.setText("200.000");
+                tvMoney.setText("0");
                 break;
             }
             case 2 : {
                 tvIndexQuestion.setText("Câu 2");
-                tvMoney.setText("400.000");
                 break;
             }
             case 3 : {
                 tvIndexQuestion.setText("Câu 3");
-                tvMoney.setText("600.000");
                 break;
             }
             case 4 : {
                 tvIndexQuestion.setText("Câu 4");
-                tvMoney.setText("1.000.000");
                 break;
             }
             case 5 : {
                 tvIndexQuestion.setText("Câu 5");
-                tvMoney.setText("2.000.000");
                 break;
             }
             case 6 : {
                 tvIndexQuestion.setText("Câu 6");
-                tvMoney.setText("3.000.000");
                 break;
             }
             case 7 : {
                 tvIndexQuestion.setText("Câu 7");
-                tvMoney.setText("6.000.000");
                 break;
             }
             case 8 : {
                 tvIndexQuestion.setText("Câu 8");
-                tvMoney.setText("10.000.000");
                 break;
             }
             case 9 : {
                 tvIndexQuestion.setText("Câu 9");
-                tvMoney.setText("14.000.000");
                 break;
             }
             case 10 : {
                 tvIndexQuestion.setText("Câu 10");
-                tvMoney.setText("22.000.000");
                 break;
             } case 11 : {
                 tvIndexQuestion.setText("Câu 11");
-                tvMoney.setText("30.000.000");
                 break;
             }
             case 12 : {
                 tvIndexQuestion.setText("Câu 12");
-                tvMoney.setText("40.000.000");
                 break;
             }
             case 13 : {
                 tvIndexQuestion.setText("Câu 13");
-                tvMoney.setText("60.000.000");
                 break;
             }
             case 14: {
                 tvIndexQuestion.setText("Câu 14");
-                tvMoney.setText("85.000.000");
                 break;
             }
             case 15 : {
                 tvIndexQuestion.setText("Câu 15");
-                tvMoney.setText("150.000.000");
                 break;
             }
             default: {
                 tvIndexQuestion.setText("Câu 1");
-                tvMoney.setText("200.000");
                 break;
             }
         }

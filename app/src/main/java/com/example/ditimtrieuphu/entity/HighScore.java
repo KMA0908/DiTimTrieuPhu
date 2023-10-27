@@ -13,16 +13,9 @@ public class HighScore {
     private String name;
     @ColumnInfo(name = "Score")
     private String Score;
-
-    public String getLevel() {
-        return level;
-    }
-
-    public void setLevel(String level) {
-        this.level = level;
-    }
-
+    @ColumnInfo(name = "level")
     private String level;
+
     public HighScore(@NonNull String name, String score,String level) {
         this.name = name;
         Score = score;
@@ -46,6 +39,14 @@ public class HighScore {
 
     public void setScore(String score) {
         Score = score;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public String getLevel() {
+        return level;
     }
 
     @Override

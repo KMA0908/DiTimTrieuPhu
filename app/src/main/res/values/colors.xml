@@ -18,5 +18,5 @@
     <color name="color_question">#fcc116</color>
     <color name="light_yellow">#decdbd</color>
     <color name="green">#4CAF50</color>
-
+    <color name="background_dialog_color">#664CAF</color>
 </resources>

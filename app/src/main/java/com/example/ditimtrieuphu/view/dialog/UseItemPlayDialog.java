@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.common.UiUtils;
 import com.example.ditimtrieuphu.entity.BonusItem;
 import com.example.ditimtrieuphu.view.adapter.ItemUsedAdapter;
 
@@ -33,7 +34,6 @@ public class UseItemPlayDialog extends DialogFragment {
     private ItemUsedAdapter mAdapter;
     private List<BonusItem> mOwnedItems;
     private Executable mPlayExecutable;
-    private Executable mItemUsedExecutable;
     private List<BonusItem> usedItem;
 
     @Nullable
@@ -59,10 +59,12 @@ public class UseItemPlayDialog extends DialogFragment {
         mItemRecyclerView.setAdapter(mAdapter);
         mItemRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mPlayX1Button.setOnClickListener(view1 -> {
-            mPlayExecutable.execute(0, usedItem);
-        });
-        mPlayX1Button.setOnClickListener(view1 -> {
             mPlayExecutable.execute(1, usedItem);
+            dismiss();
+        });
+        mPlayX2Button.setOnClickListener(view1 -> {
+            mPlayExecutable.execute(2, usedItem);
+            dismiss();
         });
     }
 
@@ -71,7 +73,8 @@ public class UseItemPlayDialog extends DialogFragment {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            int width = UiUtils.getInstance(getContext()).calculateWidthWithMargin(24f);
+            getDialog().getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         }
     }
 
@@ -88,10 +91,14 @@ public class UseItemPlayDialog extends DialogFragment {
 
     public void setButtonExecutable(Executable executable) {
         mPlayExecutable = executable;
-    }
-
-    public void setUseItemExecutable(Executable executable) {
-        mItemUsedExecutable = executable;
+        if (mPlayX1Button != null) {
+            mPlayX1Button.setOnClickListener(view1 -> {
+                mPlayExecutable.execute(1, usedItem);
+            });
+            mPlayX2Button.setOnClickListener(view1 -> {
+                mPlayExecutable.execute(2, usedItem);
+            });
+        }
     }
 
     private void onItemChecked(Object...objects) {

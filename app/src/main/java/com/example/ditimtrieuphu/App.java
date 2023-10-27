@@ -20,7 +20,9 @@ public class App extends Application {
         super.onCreate();
         instance=this;
         storage=new Storage();
-        appDB = Room.databaseBuilder(this,AppDatabase.class,"Question").createFromAsset("databases/Question").build();
+        appDB = Room.databaseBuilder(this,AppDatabase.class,"Question.db")
+                .allowMainThreadQueries()
+                .createFromAsset("databases/Question.db").build();
     }
 
     public static App getInstance() {

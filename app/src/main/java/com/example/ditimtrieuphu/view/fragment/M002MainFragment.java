@@ -130,8 +130,17 @@ public class M002MainFragment extends BaseFragment<MainFragViewModel> {
             dialog.setOwnedItems(mModel.getOwnedBonusItem());
             dialog.setButtonExecutable(objects -> {
                 int stamina = (int) objects[0];
+                // Check stamina con lai co du de choi khong thi thong bao
+                if (stamina > mModel.getPlayerInfoMutableLiveData().getValue().getStamina()) {
+                    String message = "Bạn không đủ thể lực để chơi x" + stamina + " lần";
+                    showMessageDialog(message);
+                    return;
+                }
+                mModel.heSoChoi = stamina;
+                stamina = mModel.getPlayerInfoMutableLiveData().getValue().getStamina() - stamina;
                 List<BonusItem> bonusItems = (List<BonusItem>) objects[1];
                 mModel.updateItems(bonusItems);
+                mModel.updatePlayerStamina(stamina);
                 showPlayFragment();
             });
             dialog.show(getParentFragmentManager(), UseItemPlayDialog.TAG);

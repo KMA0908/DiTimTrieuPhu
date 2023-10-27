@@ -38,7 +38,7 @@ public class PlayerProfileFragment extends BaseFragment<MainFragViewModel>{
 
     @Override
     protected void initViews() {
-        mUiUtils = UiUtils.getInstance();
+        mUiUtils = UiUtils.getInstance(getContext());
 
         mBackImageView = findViewById(R.id.iv_back, this);
         mPlayerNameTextView = findViewById(R.id.tv_player_name);

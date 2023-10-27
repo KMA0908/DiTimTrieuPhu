@@ -6,6 +6,7 @@ import android.os.Handler;
 
 import com.example.ditimtrieuphu.OnActionCallBack;
 import com.example.ditimtrieuphu.R;
+import com.example.ditimtrieuphu.common.UiUtils;
 import com.example.ditimtrieuphu.viewmodel.SplashViewModel;
 
 public class M001SplashFragment extends BaseFragment<SplashViewModel> {
@@ -19,7 +20,9 @@ public class M001SplashFragment extends BaseFragment<SplashViewModel> {
     @Override
     protected void initViews() {
         // fetch data resource tu firebase
-        mModel.syncGameResources(objects -> gotoMainFragment(), null);
+        mModel.syncGameResources(objects -> gotoMainFragment(), objects -> {
+            UiUtils.getInstance(getContext()).showMessage(getParentFragmentManager(), (String) objects[0]);
+        });
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.util.Log;
 
 import androidx.room.Room;
 
+import com.example.ditimtrieuphu.App;
 import com.example.ditimtrieuphu.Executable;
 import com.example.ditimtrieuphu.common.GameConstant;
 import com.example.ditimtrieuphu.database.AppDatabase;
@@ -41,9 +42,7 @@ public class UserSessionManager {
     private UserSessionManager(Context context) {
         auth = FirebaseAuth.getInstance();
         firebaseDatabaseManager = FirebaseDatabaseManager.getInstance();
-        appDatabase = Room.databaseBuilder(context, AppDatabase.class, GameConstant.APP_DATABASE)
-                .allowMainThreadQueries()
-                .build();
+        appDatabase = App.getInstance().getAppDB();
         ownedBadges = new ArrayList<>();
         ownedItems = new ArrayList<>();
         allItems = new ArrayList<>();
@@ -238,21 +237,30 @@ public class UserSessionManager {
                 });
     }
 
-    public Task<Void> updateBonusItemRelation(BonusItem bonusItem) {
+    public Task<Void> updateBonusItemRelation(BonusItem bonusItem, boolean increase) {
         // Neu so luong update bang 0 thi xoa
         if (bonusItem.getAmount() == 0) {
-            return firebaseDatabaseManager.deleteBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()));
+            return firebaseDatabaseManager.deleteBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()))
+                    .addOnCompleteListener(task -> {
+                        appDatabase.bonusItemDao().update(bonusItem);
+                    });
         }
         return firebaseDatabaseManager.updateBonusItemRelation(bonusItem.toRelationDto(getCurrentUserId()))
                 .addOnCompleteListener(task -> {
                     appDatabase.bonusItemDao().update(bonusItem);
-                    payForItem(bonusItem.getPriceMoney());
+                    if (increase) {
+                        payForItem(bonusItem.getPriceMoney());
+                    }
                 });
     }
 
     public void payForItem(long price) {
         playerInfo.setProperty(playerInfo.getProperty() - price);
         firebaseDatabaseManager.updatePlayerInfo(playerInfo);
+    }
+
+    public Task<Void> updatePlayerInfo() {
+        return firebaseDatabaseManager.updatePlayerInfo(playerInfo);
     }
 
     // Getter

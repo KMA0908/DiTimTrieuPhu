@@ -22,10 +22,14 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
     private UserSessionManager mUserSessionManager;
     private final MutableLiveData<PlayerInfo> mPlayerInfoMutableLiveData;
     private List<BonusItem> itemUsed;
+    public final MutableLiveData<Long> totalMoneyLiveData;
+    public int totalExp;
+    public int heSoChoi = 1;
 
     public MainFragViewModel() {
         mPlayerInfoMutableLiveData = new MutableLiveData<>();
         itemUsed = new ArrayList<>();
+        totalMoneyLiveData = new MutableLiveData<>(0L);
     }
 
     public void logout(Executable success, Executable fail) {
@@ -90,8 +94,30 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
         itemUsed.addAll(bonusItems);
         for (BonusItem item: bonusItems) {
             item.setAmount(item.getAmount() - 1);
-            mUserSessionManager.updateBonusItemRelation(item);
+            mUserSessionManager.updateBonusItemRelation(item, false);
+            if (item.getAmount() == 0) {
+                mUserSessionManager.getOwnedItems().remove(item);
+            }
         }
+    }
+
+    public void updatePlayerStamina(int stamina) {
+        mPlayerInfoMutableLiveData.getValue().setStamina(stamina);
+        mUserSessionManager.updatePlayerInfo();
+    }
+
+    public void updateMoneyAndExpPlayer(long money, int exp) {
+        long playerMoney = mPlayerInfoMutableLiveData.getValue().getProperty();
+        int playerExp = mPlayerInfoMutableLiveData.getValue().getLevelProgress();
+        mPlayerInfoMutableLiveData.getValue().setProperty(playerMoney + money);
+        mPlayerInfoMutableLiveData.getValue().setLevelProgress(playerExp + exp);
+        mUserSessionManager.updatePlayerInfo();
+    }
+
+    public void resetPlaySessionInfo() {
+        totalMoneyLiveData.setValue(0L);
+        itemUsed.clear();
+        totalExp = 0;
     }
 
     // Getter
@@ -110,5 +136,25 @@ public class MainFragViewModel extends ViewModel implements ContextAccessable {
 
     public List<BonusItem> getOwnedBonusItem() {
         return mUserSessionManager.getOwnedItems();
+    }
+
+    public List<BonusItem> getItemUsed() { return itemUsed; }
+
+    public float getHeSoBonusItem() {
+        float heSo = 0f;
+        for (BonusItem item: getItemUsed()) {
+            heSo += item.getEffect();
+        }
+        return heSo;
+    }
+
+    public float getHeSoBadges() {
+        float heSo = 0f;
+        for (Badge badge: mUserSessionManager.getOwnedBadges()) {
+            if (badge.isEquipped()) {
+                heSo += badge.getEffect();
+            }
+        }
+        return heSo;
     }
 }

@@ -18,7 +18,7 @@ public class Badge {
     private String name;
 
     @ColumnInfo(name = "effect")
-    private String effect;
+    private float effect;
 
     @ColumnInfo(name = "icon")
     private String icon;
@@ -43,7 +43,7 @@ public class Badge {
 
     public Badge() {}
 
-    public Badge(@NonNull String id, String name, String effect, String icon, String description, long priceMoney, int priceRocket, boolean owned, boolean equipped, String relationId) {
+    public Badge(@NonNull String id, String name, float effect, String icon, String description, long priceMoney, int priceRocket, boolean owned, boolean equipped, String relationId) {
         this.id = id;
         this.name = name;
         this.effect = effect;
@@ -72,11 +72,11 @@ public class Badge {
         this.name = name;
     }
 
-    public String getEffect() {
+    public float getEffect() {
         return effect;
     }
 
-    public void setEffect(String effect) {
+    public void setEffect(float effect) {
         this.effect = effect;
     }
 

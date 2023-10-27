@@ -46,7 +46,7 @@ public class OwnedBadgeListDialog extends DialogFragment {
         if (mBadges == null) {
             mBadges = new ArrayList<>();
         }
-        mUiUtils = UiUtils.getInstance();
+        mUiUtils = UiUtils.getInstance(getContext());
         mOwnedBadgeRecyclerView = view.findViewById(R.id.rv_list_owned_badge);
         mAdapter = new BadgeAdapter(getContext(), mBadges, objects -> onEquipBadgeChange(objects), objects -> onEquippedFail());
         mOwnedBadgeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

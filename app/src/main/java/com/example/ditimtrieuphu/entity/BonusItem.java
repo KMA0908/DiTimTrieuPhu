@@ -18,7 +18,7 @@ public class BonusItem {
     private String name;
 
     @ColumnInfo(name = "effect")
-    private String effect;
+    private float effect;
 
     @ColumnInfo(name = "icon")
     private String icon;
@@ -40,7 +40,7 @@ public class BonusItem {
 
     public BonusItem() {}
 
-    public BonusItem(@NonNull String id, String name, String effect, String icon, long priceMoney, int priceRocket, int amount) {
+    public BonusItem(@NonNull String id, String name, float effect, String icon, long priceMoney, int priceRocket, int amount) {
         this.id = id;
         this.name = name;
         this.effect = effect;
@@ -59,7 +59,7 @@ public class BonusItem {
         return name;
     }
 
-    public String getEffect() {
+    public float getEffect() {
         return effect;
     }
 
@@ -87,7 +87,7 @@ public class BonusItem {
         this.name = name;
     }
 
-    public void setEffect(String effect) {
+    public void setEffect(float effect) {
         this.effect = effect;
     }
 

@@ -1,5 +1,9 @@
 package com.example.ditimtrieuphu.common;
 
+import android.content.Context;
+import android.util.DisplayMetrics;
+import android.view.WindowManager;
+
 import androidx.fragment.app.FragmentManager;
 
 import com.example.ditimtrieuphu.view.dialog.SimpleMessageDialog;
@@ -10,12 +14,15 @@ public class UiUtils {
 
     private WaitingLoadingBlurDialog blurDialog;
     private SimpleMessageDialog messageDialog;
+    private Context context;
 
-    private UiUtils() {}
+    private UiUtils(Context context) {
+        this.context = context;
+    }
 
-    public static UiUtils getInstance() {
+    public static UiUtils getInstance(Context context) {
         if (instance == null) {
-            instance = new UiUtils();
+            instance = new UiUtils(context);
         }
         return instance;
     }
@@ -39,5 +46,16 @@ public class UiUtils {
         }
         messageDialog.setDialogMessage(message);
         messageDialog.show(fragmentManager, SimpleMessageDialog.TAG_DIALOG_MESSAGE);
+    }
+
+    public int calculateWidthWithMargin(float margin) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(displayMetrics);
+        int screenWidth = displayMetrics.widthPixels;
+        float density = context.getResources().getDisplayMetrics().density;
+        float marginPixels = margin * density;
+
+        return (int) (screenWidth - 2 * marginPixels);
     }
 }

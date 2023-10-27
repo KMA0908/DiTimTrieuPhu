@@ -47,7 +47,7 @@ public class ShopViewModel extends ViewModel implements ContextAccessable {
                         }
                     });
         } else {
-            mUserSessionManager.updateBonusItemRelation(bonusItem)
+            mUserSessionManager.updateBonusItemRelation(bonusItem, true)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
                             addOwnedItem(bonusItem);
