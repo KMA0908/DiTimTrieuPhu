@@ -155,6 +155,7 @@ public class M004QuestionFragment extends BaseFragment<QuestionViewModel> {
                 mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mp) {
+                        // Tai moc cau hoi nay can confirm nguoi choi co dung choi hay khong de nhan thuong
                         showPlayFragment();
                     }
                 });

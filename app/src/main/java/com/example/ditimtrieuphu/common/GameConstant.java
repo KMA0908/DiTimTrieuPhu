@@ -13,4 +13,7 @@ public class GameConstant {
     public static final long[] MONEY_REWARD = {200000, 400000, 600000, 1000000, 2000000, 3000000, 6000000, 10000000
             , 14000000, 22000000, 30000000, 40000000, 60000000, 85000000, 120000000};
     public static final int[] EXP_REWARD = {50, 50, 50, 50, 50, 100, 100, 100, 100, 100, 120, 120, 120, 120, 120};
+    public static final long PLAY_TIME_STAGE_1 = 30000;
+    public static final long PLAY_TIME_STAGE_2 = 20000;
+    public static final long PLAY_TIME_STAGE_3 = 15000;
 }

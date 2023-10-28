@@ -25,6 +25,7 @@ import com.example.ditimtrieuphu.database.AppDatabase;
 import com.example.ditimtrieuphu.entity.BonusItem;
 import com.example.ditimtrieuphu.entity.Question;
 import com.example.ditimtrieuphu.view.dialog.BarChartQuestion;
+import com.example.ditimtrieuphu.view.dialog.ConfirmStopDialog;
 import com.example.ditimtrieuphu.view.dialog.GameResultDialog;
 import com.example.ditimtrieuphu.view.dialog.HelpCallDialog;
 import com.example.ditimtrieuphu.viewmodel.MainFragViewModel;
@@ -52,6 +53,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
 
     private CountDownTimer countDownTimer; // Minh: de countDownTimer lam global
     private long mSecondsLeft; // Minh: thoi gian con lai tren timer
+    private boolean flagPlayerStop = false;
 
     @Override
     protected void initViews() {
@@ -80,7 +82,7 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         ivCallHelp = findViewById(R.id.iv_call_help, this);
         findViewById(R.id.icon_person, this);
         findViewById(R.id.iv_stop, this);
-        countDownQuestion(TIME_PER_QUESTION);
+
         AppDatabase database =  Room.databaseBuilder(getActivity(),
                         AppDatabase.class, "databases/Question.db")
                 .allowMainThreadQueries()
@@ -89,17 +91,49 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         if (App.getInstance().getStorage().getCurrentLevel() != 0 ) {
            index = App.getInstance().getStorage().getCurrentLevel();
         }
-        setTextForQuestion(index);
-        setStateHelp();
-        QuestionManager.getInstance().getQuestionByLevel(index, new QuestionManager.OnResultCallBack() {
-            @Override
-            public void callBack(Object data) {
 
-                getActivity().runOnUiThread(() -> {
-                    initDataQuestion(data);
+        // Callback lai tu ben QuestionFragment, check level 6 hoac 11 thi hoi user dung choi
+        if (index == 6 || index == 11) {
+            ConfirmStopDialog dialog = new ConfirmStopDialog();
+            dialog.setHandleButton(objects -> {
+                flagPlayerStop = true;
+                finishGame();
+            }, objects -> {
+                setTextForQuestion(index);
+                setStateHelp();
+                QuestionManager.getInstance().getQuestionByLevel(index, new QuestionManager.OnResultCallBack() {
+                    @Override
+                    public void callBack(Object data) {
+                        getActivity().runOnUiThread(() -> {
+                            initDataQuestion(data);
+                        });
+                    }
                 });
+                if (index == 6) {
+                    countDownQuestion(GameConstant.PLAY_TIME_STAGE_2);
+                } else {
+                    countDownQuestion(GameConstant.PLAY_TIME_STAGE_3);
+                }
+            });
+            dialog.show(getParentFragmentManager(), "TAG");
+        } else {
+            setTextForQuestion(index);
+            if (index == 15) {
+                disableAllHelp();
+            } else {
+                setStateHelp();
             }
-        });
+            QuestionManager.getInstance().getQuestionByLevel(index, new QuestionManager.OnResultCallBack() {
+                @Override
+                public void callBack(Object data) {
+                    getActivity().runOnUiThread(() -> {
+                        initDataQuestion(data);
+                    });
+                }
+            });
+            countDownQuestion(GameConstant.PLAY_TIME_STAGE_1);
+        }
+
 
         // observe money
         mModel.totalMoneyLiveData.observe(this, money -> {
@@ -142,6 +176,17 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
         if (App.getInstance().getStorage().isStateChange()){
             ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
         }
+    }
+
+    private void disableAllHelp() {
+        ivHelp50.setImageResource(R.drawable.ic_50_50_done);
+        ivAudienceHelp.setImageResource(R.drawable.ic_audience_done);
+        ivCallHelp.setImageResource(R.drawable.ic_phone_done);
+        ivChangeQuestion.setImageResource(R.drawable.ic_reset_done);
+        ivHelp50.setEnabled(false);
+        ivAudienceHelp.setEnabled(false);
+        ivCallHelp.setEnabled(false);
+        ivChangeQuestion.setEnabled(false);
     }
 
     private void initDataQuestion(Object data) {
@@ -548,31 +593,43 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                             },2500);
                         } else {
                             showFalseQuestion(findViewById(id));
-                            new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    GameResultDialog dialog = new GameResultDialog();
-                                    // Tinh bonus tu item va Tinh bonus tu huy hieu
-                                    float heSo = mModel.getHeSoBadges() + mModel.getHeSoBonusItem();
-                                    final long finalMoney = (long) (mModel.totalMoneyLiveData.getValue() * mModel.heSoChoi + mModel.totalMoneyLiveData.getValue()*heSo);
-                                    dialog.setDataResult(finalMoney, mModel.totalExp);
-                                    dialog.setmConfirmExecutable(objects -> {
-                                        // update thong so nguoi choi
-                                        //TODO check flag dung cuoc choi dung luc
-                                        mModel.updateMoneyAndExpPlayer(finalMoney, mModel.totalExp);
-                                        mModel.resetPlaySessionInfo();
-                                        callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
-                                        App.getInstance().getStorage().resetPlaySession();
-                                    });
-                                    dialog.show(getParentFragmentManager(), GameResultDialog.TAG);
-                                }
-                            },2500);
-
+                            finishGame();
                         }
                     }
                 });
             }
         });
+    }
+
+    private void finishGame() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                GameResultDialog dialog = new GameResultDialog();
+                // Tinh bonus tu item va Tinh bonus tu huy hieu
+                float heSo = mModel.getHeSoBadges() + mModel.getHeSoBonusItem();
+                final long finalMoney = (long) (mModel.totalMoneyLiveData.getValue() * mModel.heSoChoi + mModel.totalMoneyLiveData.getValue()*heSo);
+                // Neu nguoi choi thua cuoc tai cac cau hoi nam ngoai cau so 5 thi khong nhan thuong
+                if (index <= 5 || flagPlayerStop || index == 15) {
+                    dialog.setDataResult(finalMoney, mModel.totalExp);
+                } else {
+                    dialog.setDataResult(0, 0);
+                }
+                dialog.setmConfirmExecutable(objects -> {
+                    // update thong so nguoi choi
+                    // Neu nguoi choi thua cuoc tai cac cau hoi nam ngoai cau so 5 thi khong nhan thuong
+                    if (index <= 5 || flagPlayerStop || index == 15) {
+                        mModel.updateMoneyAndExpPlayer(finalMoney, mModel.totalExp);
+                    } else {
+                        mModel.updateMoneyAndExpPlayer(0, 0);
+                    }
+                    mModel.resetPlaySessionInfo();
+                    callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
+                    App.getInstance().getStorage().resetPlaySession();
+                });
+                dialog.show(getParentFragmentManager(), GameResultDialog.TAG);
+            }
+        },2500);
     }
 
     private void showAlertDialogWinner() {
@@ -591,14 +648,8 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                 AlertDialog alertDialog = new AlertDialog.Builder(getContext())
                         .setTitle("Chúc mừng")
                         .setMessage("Xin chúc mừng bạn chính là triệu phú")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                callBack.onCallBack(KEY_SHOW_MAIN_FRAGMENT);
-                                dialog.dismiss();
-                            }
-                        })
-                        .setNegativeButton("Hủy", null)
+                        .setPositiveButton("OK", (dialog, which) -> finishGame())
+                        .setNegativeButton("Hủy", (dialog, which) -> finishGame())
                         .create();
 
                 alertDialog.show();
@@ -634,8 +685,14 @@ public class M003PlayFragment extends BaseFragment<MainFragViewModel> {
                     } else {
                         initDataQuestion(data);
                         setTextForQuestion(level);
-                        // Minh: bat dau cau hoi moi thi start lai timer
-                        countDownQuestion(TIME_PER_QUESTION);
+                        // Minh: bat dau cau hoi moi thi start lai timer, check cau hoi de start timer theo muc do
+                        if (index >= 1 && index <= 5) {
+                            countDownQuestion(GameConstant.PLAY_TIME_STAGE_1);
+                        } else if (index >=6 && index <= 10) {
+                            countDownQuestion(GameConstant.PLAY_TIME_STAGE_2);
+                        } else {
+                            countDownQuestion(GameConstant.PLAY_TIME_STAGE_3);
+                        }
                     }
                 });
             }

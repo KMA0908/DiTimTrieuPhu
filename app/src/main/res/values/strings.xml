@@ -20,4 +20,5 @@
     <string name="profile">Hồ sơ</string>
     <string name="equip">Trang bị</string>
     <string name="unequip">Hủy bỏ</string>
+    <string name="content_stop">Bạn có muốn dừng cuộc chơi và nhận thưởng hoặc tiếp tục chơi để nhận những phần thưởng cao hơn (Nếu trả lời sai bạn sẽ mất toàn bộ phần thường)</string>
 </resources>
