@@ -1,17 +1,16 @@
 plugins {
     id 'com.android.application'
 }
-apply plugin: 'com.google.gms.google-services'
 apply plugin: 'net.ltgt.apt'
 android {
     compileSdkVersion 33
 
     defaultConfig {
-        applicationId "com.example.ditimtrieuphu"
+        applicationId "com.nhn.ditimtrieuphu"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.0.4"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -60,9 +59,6 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:2.2.4"
     implementation "androidx.room:room-ktx:2.2.5"
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation platform('com.google.firebase:firebase-bom:28.4.2')
-    implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-firestore'
-    implementation 'com.google.firebase:firebase-database:20.0.2'
-    implementation 'com.google.firebase:firebase-storage:20.0.0'
+
+    implementation 'com.google.android.gms:play-services-ads:20.5.0'
 }

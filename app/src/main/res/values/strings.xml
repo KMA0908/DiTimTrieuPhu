@@ -9,16 +9,20 @@
     <string name="hint_password_confirm">Nhập lại mật khẩu</string>
     <string name="close">Đóng</string>
     <string name="default_player_name">Default Player Name</string>
-    <string name="default_player_level">LV. %d</string>
+    <string name="default_player_level">Score: %d</string>
+    <string name="score">Score của bạn</string>
     <string name="profile_player_level">LEVEL %d</string>
-    <string name="title_rename_dialog">Chúng tôi nên gọi bạn là gì?</string>
+    <string name="title_rename_dialog">Chào mừng bạn đến với chương trình Ai là triệu phú? \nNgười chơi của chúng tôi tên là :</string>
     <string name="confirm">Xác nhận</string>
     <string name="setting">Cài đặt</string>
     <string name="bg_music_setting">Nhạc nền</string>
+    <string name="title_purchase_dialog">Bạn muốn mở khoá huy hiệu</string>
+    <string name="price_item">Giá huy hiệu là</string>
     <string name="logout">Đăng xuất</string>
     <string name="stamina">%d/%d</string>
-    <string name="profile">Hồ sơ</string>
+    <string name="profile">Thông tin người chơi</string>
     <string name="equip">Trang bị</string>
     <string name="unequip">Hủy bỏ</string>
-    <string name="content_stop">Bạn có muốn dừng cuộc chơi và nhận thưởng hoặc tiếp tục chơi để nhận những phần thưởng cao hơn (Nếu trả lời sai bạn sẽ mất toàn bộ phần thường)</string>
+    <string name="content_stop">Bạn có muốn dừng cuộc chơi và nhận thưởng hoặc tiếp tục chơi để nhận những phần thưởng cao hơn (Nếu trả lời sai bạn sẽ mất toàn bộ phần thường không nằm trong các mốc của chương trình)</string>
+    <string name="admob_app_id">ca-app-pub-6915692165203743~5357270820</string>
 </resources>

@@ -4,7 +4,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_splash"
     android:orientation="vertical">
-
     <RelativeLayout
         android:layout_width="250dp"
         android:layout_height="wrap_content"
@@ -15,15 +14,16 @@
         <ImageView
             android:id="@+id/iv_bg_avatar_title"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="52dp"
             android:background="@drawable/ic_play_answer" />
 
         <ImageView
             android:id="@+id/iv_person"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_marginStart="12dp"
+            android:layout_height="40dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_no_image" />
+            android:src="@drawable/ic_bussiness_man" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,46 +43,27 @@
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/tv_player_level"
+            <TableRow
+                android:gravity="center|start"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/default_player_level"
-                android:textColor="@color/white"
-                android:textSize="10sp"
-                android:textStyle="bold" />
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginTop="1dp"
+                    android:src="@drawable/ic_coin"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"/>
+                <TextView
+                    android:layout_marginStart="4dp"
+                    android:id="@+id/tv_player_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/default_player_level"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
         </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:paddingHorizontal="8dp">
-
-        <ImageView
-            android:layout_centerVertical="true"
-            android:id="@+id/iv_bg_stamina"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="@drawable/ic_play_answer" />
-
-        <ImageView
-            android:id="@+id/iv_stamina_icon"
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_stamina" />
-
-        <TextView
-            android:id="@+id/tv_player_stamina"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/stamina"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" />
     </RelativeLayout>
 
     <LinearLayout
@@ -113,7 +94,7 @@
             android:src="@drawable/ic_play_now" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="3">
@@ -124,20 +105,6 @@
             android:layout_marginHorizontal="16dp"
             android:gravity="center"
             android:weightSum="5">
-
-            <ImageView
-                android:id="@+id/iv_shop"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:layout_weight="1"
-                android:src="@drawable/ic_shop" />
-
-            <ImageView
-                android:layout_weight="1"
-                android:id="@+id/iv_bag"
-                android:layout_width="0dp"
-                android:layout_height="46dp"
-                android:src="@drawable/bag" />
 
             <ImageView
                 android:layout_weight="1"
@@ -158,10 +125,28 @@
                 android:id="@+id/iv_music"
                 android:layout_width="0dp"
                 android:layout_height="46dp"
-                android:src="@drawable/ic_settings" />
+                android:src="@drawable/ic_sound_off" />
+
+            <ImageView
+                android:layout_weight="1"
+                android:id="@+id/iv_logout"
+                android:layout_width="0dp"
+                android:layout_height="46dp"
+                android:src="@drawable/ic_logout" />
+
         </TableRow>
 
-    </LinearLayout>
+        <com.google.android.gms.ads.AdView
+            xmlns:ads="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/adView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            ads:adSize="SMART_BANNER"
+            ads:adUnitId="ca-app-pub-6915692165203743/5919898672">
+        </com.google.android.gms.ads.AdView>
+    </RelativeLayout>
 
 
 </LinearLayout>

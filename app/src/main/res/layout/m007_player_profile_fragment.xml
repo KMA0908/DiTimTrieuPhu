@@ -29,12 +29,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
+        android:id="@+id/iv_exit"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_exit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <ImageView
         android:id="@+id/iv_avatar"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
         android:layout_centerVertical="true"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_no_image"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_bussiness_man"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_back" />
@@ -56,9 +65,10 @@
         android:id="@+id/tv_player_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/profile_player_level"
+        android:text="@string/score"
         android:textColor="@color/white"
         android:textSize="16sp"
+        android:layout_marginTop="10dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,54 +109,21 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rl_rocket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:paddingHorizontal="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rl_money">
-
-        <ImageView
-            android:id="@+id/iv_bg_rocket"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_centerVertical="true"
-            android:background="@drawable/ic_play_answer" />
-
-        <ImageView
-            android:id="@+id/iv_rocket_icon"
-            android:layout_width="20dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_rocket" />
-
-        <TextView
-            android:id="@+id/tv_player_rocket"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="0"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:clickable="true"
-        android:focusable="true"
-        android:foregroundGravity="center"
-        android:paddingTop="40dp"
-        android:paddingHorizontal="24dp"
         android:id="@+id/rv_badges"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_question_player"
+        android:clickable="true"
+        android:focusable="true"
+        android:foregroundGravity="center"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="60dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rl_rocket" />
+        app:layout_constraintTop_toBottomOf="@id/rl_money"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
